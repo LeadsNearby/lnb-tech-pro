@@ -154,11 +154,13 @@ get_header(); ?>
 		var nnReviewCount = $('[itemprop="reviewCount"]').text();
 
 		if (!nnReviewCount) {
-			nnRating = "0";
-			nnReviewCount = "0"
+			$('.profile-nn-stats-container').hide();
+			// nnRating = "0";
+			// nnReviewCount = "0"
 		}
 
-		$('#profile-tech-rating').text(parseFloat(nnRating).toFixed(1));
+		// $('#profile-tech-rating').text(parseFloat(nnRating).toFixed(1));
+		$('#profile-tech-rating').text( (Math.floor(nnRating * 10) / 10).toFixed(1) );
 		$('#profile-tech-reviews-num').text(nnReviewCount);
 	})
 </script>
