@@ -85,6 +85,6 @@ if( ! class_exists( 'NN_Tech_API' ) ) :
 
 endif;
 
-add_action( 'save_post', array( 'NN_Tech_API', 'clear_data' ) );
+add_action( 'save_post_profiles', array( 'NN_Tech_API', 'clear_data' ) );
 add_action( 'wp_update_nav_menu', array( 'NN_Tech_API', 'clear_data' ) );
 add_action( 'after_rocket_clean_cache_dir', array( 'NN_Tech_API', 'clear_data' ) );

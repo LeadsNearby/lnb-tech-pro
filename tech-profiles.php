@@ -9,33 +9,45 @@ Author URI: http://leadsnearby.com
 License: GPLv2
 */
 
-function techprofile_js_scripts()
-{
+if( ! class_exists( 'LeadsNearby_Tech_Profiles' ) ) {
+
+	class LeadsNearby_Tech_Profiles {
+
+		public $post_type = 'profiles';
+		public $options = array(
+			);
+
+	}
+
+}
+
+function techprofile_js_scripts() {
 	/* Register our script. */
-   if (is_admin()) {
+   if ( is_admin() ) {
 		wp_enqueue_media();
-		wp_register_script('tech-commons', plugins_url('/lnb-tech-pro/js/commons.js'));
-		wp_enqueue_script('tech-commons');
+
+		wp_register_script( 'tech-commons', plugins_url( '/assets/js/commons.js', __FILE__ ), array(), null, true );
+		wp_enqueue_script( 'tech-commons' );
         
 		/* Register Admin Styles */
-        wp_register_style('tech-admin-styles', plugins_url('/lnb-tech-pro/css/tech-admin-styles.css'));
-		wp_enqueue_style('tech-admin-styles');		
+        wp_register_style( 'tech-admin-styles', plugins_url( '/assets/css/tech-admin-styles.css', __FILE__ ) );
+		wp_enqueue_style( 'tech-admin-styles' );		
    }
 }
-add_action('admin_enqueue_scripts', 'techprofile_js_scripts');
+add_action( 'admin_enqueue_scripts', 'techprofile_js_scripts' );
 
-function techprofile_css_styles()  
-{ 
-	if (!is_admin()) {
-		wp_register_style('tech-styles', plugins_url('/lnb-tech-pro/css/tech-styles.min.css'));
-		wp_enqueue_style('tech-styles');
+function techprofile_css_styles() {
+
+	if ( get_post_type() == 'profiles' ) {
+		wp_register_style( 'tech-styles', plugins_url( '/assets/css/tech-styles.min.css', __FILE__ ) );
+		wp_enqueue_style( 'tech-styles' );
 	}		
 }
 add_action('wp_enqueue_scripts', 'techprofile_css_styles');
 
 add_filter('the_excerpt', 'do_shortcode');
 
-// Register post types: teams
+// Register post types: Tech Profile
 add_action('init', 'tech_profile');
 function tech_profile() {
 	
@@ -232,7 +244,7 @@ function cert_images() {
 	<?php
 }
 
-add_action('save_post', 'save_meta');
+add_action('save_post_profiles', 'save_meta');
 function save_meta(){
 	global $post;
 	update_post_meta($post->ID, "profile_nbn_email", $_POST["profile_nbn_email"]);
@@ -302,31 +314,57 @@ function test_tech_profiles_api_fields() {
 	register_rest_field( 'profiles',
    'info',
    array(
-      'get_callback'    => 'test_profiles_api_fields_cb',
+      'get_callback'    => 'test_profiles_api_fields_get_cb',
    )
 	);
 }
 
-function test_profiles_api_fields_cb($object, $field, $request) {
+function test_profiles_api_fields_get_cb($object, $field, $request) {
 	$tech_review_data = NN_Tech_API::get_nn_data();
-	$response['name'] = get_post_meta( $object['id'], 'profile_bio_name', true);
-	$response['image'] = get_the_post_thumbnail_url( $object['id'] );
-	$response['hometown'] = get_post_meta( $object['id'], 'profile_bio_hometown', true);
-	$response['college'] = get_post_meta( $object['id'], 'profile_bio_college', true);
-	$response['certifications'] = get_post_meta( $object['id'], 'profile_bio_cert', true);
-	$response['certificationImages'] = array(
-		get_post_meta( $object['id'], 'cert_images_one', true) ? get_post_meta( $object['id'], 'cert_images_one', true) : null,
-		get_post_meta( $object['id'], 'cert_images_two', true) ? get_post_meta( $object['id'], 'cert_images_two', true) : null,
-		get_post_meta( $object['id'], 'cert_images_three', true) ? get_post_meta( $object['id'], 'cert_images_three', true) : null,
-		get_post_meta( $object['id'], 'cert_images_four', true) ? get_post_meta( $object['id'], 'cert_images_four', true) : null,
+	$name = get_post_meta( $object['id'], 'profile_bio_name', true);
+	$image = get_the_post_thumbnail_url( $object['id'] );
+	$hometown = get_post_meta( $object['id'], 'profile_bio_hometown', true);
+	$college = get_post_meta( $object['id'], 'profile_bio_college', true);
+	$certifications = get_post_meta( $object['id'], 'profile_bio_cert', true);
+	$certificationImages = array(
+		get_post_meta( $object['id'], 'cert_images_one', true),
+		get_post_meta( $object['id'], 'cert_images_two', true),
+		get_post_meta( $object['id'], 'cert_images_three', true),
+		get_post_meta( $object['id'], 'cert_images_four', true)
 		);
-	$response['favoriteAspect'] = get_post_meta( $object['id'], 'profile_bio_fav', true);
-	$response['hobbies'] = get_post_meta( $object['id'], 'profile_bio_hobbies', true);
-	$response['roleModel'] = get_post_meta( $object['id'], 'profile_bio_role', true);
-	$response['interestingFact'] = get_post_meta( $object['id'], 'profile_bio_facts', true);
-	$response['bestAdvice'] = get_post_meta( $object['id'], 'profile_bio_advice', true);
-	$response['bio'] = get_the_excerpt( $object['id'] );
-	$response['reviews'] = $tech_review_data[$object['slug']];
+	$favoriteAspect = get_post_meta( $object['id'], 'profile_bio_fav', true);
+	$hobbies = get_post_meta( $object['id'], 'profile_bio_hobbies', true);
+	$roleModel = get_post_meta( $object['id'], 'profile_bio_role', true);
+	$interestingFact = get_post_meta( $object['id'], 'profile_bio_facts', true);
+	$bestAdvice = get_post_meta( $object['id'], 'profile_bio_advice', true);
+	$bio = get_the_excerpt( $object['id'] );
+	$reviewRating = $tech_review_data[$object['slug']]['rating'];
+	$reviewCount = $tech_review_data[$object['slug']]['count'];
+
+	$response = array(
+		'name' => $name ? $name : null,
+		'image' => $image ? $image : null,
+		'hometown' => $hometown ? $hometown : null,
+		'college' => $college ? $college : null,
+		'certifications' => $certifications ? $certifications : null,
+		'certificationImages' => array(
+			$certificationImages[0] ? $certificationImages[0] : null,
+			$certificationImages[1] ? $certificationImages[1] : null,
+			$certificationImages[2] ? $certificationImages[2] : null,
+			$certificationImages[3] ? $certificationImages[3] : null,
+			),
+		'favoriteAspect' => $favoriteAspect ? $favoriteAspect : null,
+		'hobbies' => $hobbies ? $hobbies : null,
+		'roleModel' => $roleModel ? $roleModel : null,
+		'interestingFact' => $interestingFact ? $interestingFact : null,
+		'bestAdvice' => $bestAdvice ? $bestAdvice : null,
+		'bio' => $bio ? $bio : null,
+		'reviews' => array(
+			'rating' => $reviewRating ? $reviewRating : null,
+			'count' => $reviewCount ? $reviewCount : null,
+			),
+		);
+
 	return $response;
 }
 
