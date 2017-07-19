@@ -3,7 +3,7 @@
 Plugin Name: Tech Profiles
 Plugin URI: http://leadsnearby.com
 Description: Creates Tech Profiles with Nearby Now Plugin capability.
-Version: 1.0.0
+Version: 1.5.0
 Author: Leads Nearby
 Author URI: http://leadsnearby.com
 License: GPLv2
@@ -78,7 +78,8 @@ function tech_profile() {
 			'query_var' => true,
 			'can_export' => true,
 			'rewrite' => array('slug' => 'meet-the-team',),
-			'capability_type' => 'post' 				
+			'capability_type' => 'post',
+			'show_in_rest' => true, 				
 		)
 	);
 	flush_rewrite_rules();
@@ -291,5 +292,42 @@ function remove_tech_excerpt_fields() {
 	define('TechPro_MAIN', plugin_dir_path( __FILE__ ));
 	
 	// Load Custom Shortcodes
-	require_once(TechPro_MAIN . '/shortcode.php');	
+	require_once(TechPro_MAIN . '/shortcode.php');
+
+	require_once(TechPro_MAIN . '/class-nn-tech-api.php');
+
+add_filter('rest_api_init', 'test_tech_profiles_api_fields');
+
+function test_tech_profiles_api_fields() {
+	register_rest_field( 'profiles',
+   'info',
+   array(
+      'get_callback'    => 'test_profiles_api_fields_cb',
+   )
+	);
+}
+
+function test_profiles_api_fields_cb($object, $field, $request) {
+	$tech_review_data = NN_Tech_API::get_nn_data();
+	$response['name'] = get_post_meta( $object['id'], 'profile_bio_name', true);
+	$response['image'] = get_the_post_thumbnail_url( $object['id'] );
+	$response['hometown'] = get_post_meta( $object['id'], 'profile_bio_hometown', true);
+	$response['college'] = get_post_meta( $object['id'], 'profile_bio_college', true);
+	$response['certifications'] = get_post_meta( $object['id'], 'profile_bio_cert', true);
+	$response['certificationImages'] = array(
+		get_post_meta( $object['id'], 'cert_images_one', true) ? get_post_meta( $object['id'], 'cert_images_one', true) : null,
+		get_post_meta( $object['id'], 'cert_images_two', true) ? get_post_meta( $object['id'], 'cert_images_two', true) : null,
+		get_post_meta( $object['id'], 'cert_images_three', true) ? get_post_meta( $object['id'], 'cert_images_three', true) : null,
+		get_post_meta( $object['id'], 'cert_images_four', true) ? get_post_meta( $object['id'], 'cert_images_four', true) : null,
+		);
+	$response['favoriteAspect'] = get_post_meta( $object['id'], 'profile_bio_fav', true);
+	$response['hobbies'] = get_post_meta( $object['id'], 'profile_bio_hobbies', true);
+	$response['roleModel'] = get_post_meta( $object['id'], 'profile_bio_role', true);
+	$response['interestingFact'] = get_post_meta( $object['id'], 'profile_bio_facts', true);
+	$response['bestAdvice'] = get_post_meta( $object['id'], 'profile_bio_advice', true);
+	$response['bio'] = get_the_excerpt( $object['id'] );
+	$response['reviews'] = $tech_review_data[$object['slug']];
+	return $response;
+}
+
 ?>

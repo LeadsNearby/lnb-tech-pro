@@ -51,11 +51,8 @@ get_header(); ?>
 		$cert_images_four = get_post_meta($post->ID, 'cert_images_four', true);
 	?>		
 	
-		<?php
-		$mypost = array( 'post_type' => 'profiles', );
-		$loop = new WP_Query( $mypost );
-		?>		
-		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>	
+		<?php if (have_posts()) : ?>
+			<?php while (have_posts()) : the_post(); ?>	
 		
 			<div class="single-profile" id="profile-<?php the_ID(); ?>">	
 				<div class="tech-info">
@@ -65,7 +62,7 @@ get_header(); ?>
 						if(has_post_thumbnail()) {                    
 							$image_src = wp_get_attachment_image_src( get_post_thumbnail_id(),'full' );
 							 echo '<span id="image-slide" style="background-image:url(' . $image_src[0]  . ')" />';
-						}?>
+						} ?>
 					</div>
 				
 					<div id="tech-bio">
@@ -77,14 +74,14 @@ get_header(); ?>
 								<?php endif; ?>
 							</div>
 							<div class="profile-nn-stats-container"> 
-								<? if ($profile_nbn_email) : ?>
+								<?php if ($profile_nbn_email) : ?>
 									<p><span id="profile-tech-rating"></span><span>Rating</span></p>
 									<p><span id="profile-tech-reviews-num"></span><span>Reviews</span></p>
 								<?php endif; ?>
 							</div>
 						</div>
 
-						<? /* <div id="certification" class="grid">
+						<?php /* <div id="certification" class="grid">
 							<div class="col-1-1">
 								<ul>
 									<?php if (get_post_meta($post->ID, 'cert_images_one', true)) { ?>
@@ -145,7 +142,8 @@ get_header(); ?>
 					</div>
 				<?php endif; ?>
 			</div><!-- .post -->
-		<?php endwhile; endif; ?>
+		<?php endwhile;
+		endif; ?>
 			
 </div><!-- #tech-content -->
 <script>
