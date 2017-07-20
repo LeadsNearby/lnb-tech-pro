@@ -5,8 +5,10 @@
  *
  */
 
-get_header(); ?>
-		<div id="tech-profiles" class="content-area profile-category">
+get_header();
+$options = get_option( 'lnb-tech-pro-options', true );
+?>
+		<div class="tech-profile content-area tech-profiles-category profile-category <?php echo $options['sprite'] ? 'tech-profiles-sprites' : ''; ?>">
 			<?php if (have_posts()) : while (have_posts()) : the_post(); ?>	
 			
 				<profile id="post-<?php the_ID(); ?>">
@@ -16,7 +18,9 @@ get_header(); ?>
 							// Default, blog-size thumbnail
 							if(has_post_thumbnail()) {                    
 								$image_src = wp_get_attachment_image_src( get_post_thumbnail_id(),'full' );
-								 echo '<a href="'.get_permalink().'" style="background-image:url('.$image_src[0].')"><span class="profile-image-overlay" style="background-image:url('.$image_src[0].')"></span></a>';
+								 echo '<a href="'.get_permalink().'" style="background-image:url('.$image_src[0].')">';
+								 echo $options['sprite'] ? '<span class="profile-image-overlay" style="background-image:url('.$image_src[0].')"></span>' : null;
+								 echo '</a>';
 							} ?>
 						</div>	
 						<div class="caption-container">

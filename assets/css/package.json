@@ -1,0 +1,17 @@
+{
+  "name": "sass-compiler",
+  "version": "1.0.0",
+  "description": "A workflow to compile and autoprefix SASS",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andrew Gillingham",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "latest",
+    "gulp-autoprefixer": "latest",
+    "gulp-postcss": "latest",
+    "gulp-sass": "latest"
+  }
+}

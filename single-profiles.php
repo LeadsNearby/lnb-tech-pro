@@ -5,7 +5,7 @@
 	*/
 
 get_header(); ?>
-<div id="tech-profiles" class="">
+<div id="" class="tech-profiles tech-profiles-individual">
 
 	<?php
 		$profile_nbn_email = get_post_meta($post->ID, 'profile_nbn_email', true);
@@ -25,16 +25,16 @@ get_header(); ?>
 		$profile_bio_advice = get_post_meta($post->ID, 'profile_bio_advice', true);
 
 		$profile_bio_array = array(
-			array('Hometown',$profile_bio_hometown ),
-			array('College',$profile_bio_college ),
-			array('Certifications',$profile_bio_cert ),
-			array('Favorite Aspect of My Job',$profile_bio_fav ),
-			array('Hobbies',$profile_bio_hobbies ),
-			array('Role Model',$profile_bio_role ),
-			array('Interesting Fact About Me',$profile_bio_facts ),
-			array('Best Advice to Customers',$profile_bio_advice ),
-			);
-			/*'Name' => $profile_bio_name,
+			// array('Hometown',$profile_bio_hometown ),
+			// array('College',$profile_bio_college ),
+			// array('Certifications',$profile_bio_cert ),
+			// array('Favorite Aspect of My Job',$profile_bio_fav ),
+			// array('Hobbies',$profile_bio_hobbies ),
+			// array('Role Model',$profile_bio_role ),
+			// array('Interesting Fact About Me',$profile_bio_facts ),
+			// array('Best Advice to Customers',$profile_bio_advice ),
+			// );
+			'Name' => $profile_bio_name,
 			'Hometown' => $profile_bio_hometown,
 			'College' => $profile_bio_college,
 			'Certifications' => $profile_bio_cert,
@@ -43,7 +43,7 @@ get_header(); ?>
 			'Role Model' => $profile_bio_role,
 			'Interesting Fact About Me' => $profile_bio_facts,
 			'Best Advice to Customers' => $profile_bio_advice,
-		);*/
+		);
 
 		$cert_images_one = get_post_meta($post->ID, 'cert_images_one', true);
 		$cert_images_two = get_post_meta($post->ID, 'cert_images_two', true);
@@ -54,14 +54,14 @@ get_header(); ?>
 		<?php if (have_posts()) : ?>
 			<?php while (have_posts()) : the_post(); ?>	
 		
-			<div class="single-profile" id="profile-<?php the_ID(); ?>">	
+			<div class="tech-profile" id="profile-<?php the_ID(); ?>">	
 				<div class="tech-info">
-				    <div id="profile-image">
+				    <div class="tech-profile-image-wrapper">
 						<?php	
 						// Default, blog-size thumbnail
 						if(has_post_thumbnail()) {                    
 							$image_src = wp_get_attachment_image_src( get_post_thumbnail_id(),'full' );
-							 echo '<span id="image-slide" style="background-image:url(' . $image_src[0]  . ')" />';
+							 echo '<span class="tech-profile-image" style="background-image:url(' . $image_src[0]  . ')" />';
 						} ?>
 					</div>
 				
@@ -124,10 +124,10 @@ get_header(); ?>
 						</div>
 
 						<div class="tech-bio-atts">
-						<?php foreach ($profile_bio_array as $bio_items) {
-							if ($bio_items[1]) :
-								echo '<p><span class="bio-att-name"><strong>'.$bio_items[0].':</strong></span> <span class="bio-att-value">'.$bio_items[1].'</span></p>';
-							endif;
+						<?php foreach ($profile_bio_array as $bio_item_name => $bio_item_value ) {
+							if( $bio_item_value ) {
+								echo '<p><span class="bio-att-name"><strong>'.$bio_item_name.':</strong></span> <span class="bio-att-value">'.$bio_item_value.'</span></p>';
+							}
 						} ?>
 						</div>
 						

@@ -3,13 +3,11 @@
 Plugin Name: LeadsNearby Tech Profiles
 Plugin URI: http://leadsnearby.com
 Description: Creates Tech Profiles with Nearby Now Plugin capability.
-Version: 1.5.0
+Version: 1.1.0
 Author: Leads Nearby
 Author URI: http://leadsnearby.com
 License: GPLv2
 */
-
-require_once( plugin_dir_path( __FILE__ ) . 'lib/updater/github-updater.php' );
 
 if( ! class_exists( 'LeadsNearby_Tech_Profiles' ) ) {
 
@@ -126,7 +124,15 @@ if( ! class_exists( 'LeadsNearby_Tech_Profiles' ) ) {
 
 			add_submenu_page('edit.php?post_type=profiles', 'Tech Profiles Settings', 'Settings', 'edit_posts', 'tech-pro-settings', [ $this, 'render_settings_page' ] );
 
-			register_setting( 'lnb-tech-pro-group', 'lnb-tech-pro-options' );
+			register_setting( 'lnb-tech-pro-group', 'lnb-tech-pro-options', [ $this, 'sanitize_settings' ] );
+		}
+
+		function sanitize_settings( $data ) {
+
+			$data['slug'] = sanitize_title_with_dashes( $data['slug'] );
+
+			return $data;
+
 		}
 
 		function render_settings_page() {
@@ -147,23 +153,38 @@ if( ! class_exists( 'LeadsNearby_Tech_Profiles' ) ) {
 			);
 
 			add_settings_field(
-			'section_general_slug',
-			'Tech Profiles Slug',
-			[ $this, 'render_text_input' ], 
-			'lnb-tech-pro-settings',
-			'section_general',
-			array(
-				'label_for' => 'section_general_slug',
-				'name' => 'slug',
-				'value' => esc_attr( $data['slug'] ),
-				'option_name' => 'lnb-tech-pro-options',
-				'placeholder' => 'profiles is the default'
-				)
-			);
+				'section_general_slug',
+				'Tech Profiles Slug',
+				[ $this, 'render_text_input' ], 
+				'lnb-tech-pro-settings',
+				'section_general',
+				array(
+					'label_for' => 'section_general_slug',
+					'name' => 'slug',
+					'value' => esc_attr( $data['slug'] ),
+					'option_name' => 'lnb-tech-pro-options',
+					'placeholder' => 'profiles is the default'
+					)
+				);
+
+			add_settings_field(
+				'section_general_sprite',
+				'Using Sprites',
+				[ $this, 'render_checkbox_input' ], 
+				'lnb-tech-pro-settings',
+				'section_general',
+				array(
+					'label_for' => 'section_general_sprite',
+					'name' => 'sprite',
+					'value' => esc_attr( $data['sprite'] ),
+					'option_name' => 'lnb-tech-pro-options',
+					)
+				);
 
 		}
 
 		function render_settings_section() {
+			return;
 		}
 
 		function render_text_input( $args ) {
@@ -172,6 +193,16 @@ if( ! class_exists( 'LeadsNearby_Tech_Profiles' ) ) {
 		        $args['name'],
 		        $args['label_for'],
 		        $args['value'],
+		        $args['placeholder']
+		    );
+		}
+
+		function render_checkbox_input( $args ) {
+			printf( '<input type="checkbox" name="%1$s[%2$s]" id="%3$s" %4$s class="regular-text">',
+		        $args['option_name'],
+		        $args['name'],
+		        $args['label_for'],
+		        $args['value'] == 'on' ? 'checked' : '',
 		        $args['placeholder']
 		    );
 		}
@@ -457,6 +488,7 @@ function lnb_tech_pro_api_fields_get_cb($object, $field, $request) {
 	$tech_review_data = NN_Tech_API::get_nn_data();
 	$name = get_post_meta( $object['id'], 'profile_bio_name', true);
 	$image = get_the_post_thumbnail_url( $object['id'] );
+	$title = get_post_meta( $object['id'], 'profile_att_title', true);
 	$hometown = get_post_meta( $object['id'], 'profile_bio_hometown', true);
 	$college = get_post_meta( $object['id'], 'profile_bio_college', true);
 	$certifications = get_post_meta( $object['id'], 'profile_bio_cert', true);
@@ -478,6 +510,7 @@ function lnb_tech_pro_api_fields_get_cb($object, $field, $request) {
 	$response = array(
 		'name' => $name ? $name : null,
 		'image' => $image ? $image : null,
+		'jobTitle' => $title ? $title : null,
 		'hometown' => $hometown ? $hometown : null,
 		'college' => $college ? $college : null,
 		'certifications' => $certifications ? $certifications : null,
@@ -504,6 +537,7 @@ function lnb_tech_pro_api_fields_get_cb($object, $field, $request) {
 
 new LeadsNearby_Tech_Profiles;
 
+require_once( plugin_dir_path( __FILE__ ) . 'lib/updater/github-updater.php' );
 if ( is_admin() ) {
     new GitHubPluginUpdater( __FILE__, 'LeadsNearby', 'lnb-tech-pro' );
 }
