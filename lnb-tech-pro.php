@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Tech Profiles
+Plugin Name: LeadsNearby Tech Profiles
 Plugin URI: http://leadsnearby.com
 Description: Creates Tech Profiles with Nearby Now Plugin capability.
 Version: 1.5.0
@@ -9,6 +9,8 @@ Author URI: http://leadsnearby.com
 License: GPLv2
 */
 
+require_once( plugin_dir_path( __FILE__ ) . 'lib/updater/github-updater.php' );
+
 if( ! class_exists( 'LeadsNearby_Tech_Profiles' ) ) {
 
 	class LeadsNearby_Tech_Profiles {
@@ -16,36 +18,166 @@ if( ! class_exists( 'LeadsNearby_Tech_Profiles' ) ) {
 		public $post_type = 'profiles';
 		public $options = array(
 			);
+		private $styles;
+		private $scripts;
 
+		function __construct() {
+
+			$this->styles = array(
+				array(
+					'handle' => 'tech-styles',
+					'src' => plugins_url( '/assets/css/tech-styles.css', __FILE__ ),
+					'deps' => array(),
+					'version' => null,
+					'media' => 'all'
+				),
+				array(
+					'handle' => 'tech-admin-styles',
+					'src' => plugins_url( '/assets/css/tech-admin-styles.css', __FILE__ ),
+					'deps' => array(),
+					'version' => null,
+					'media' => 'all'
+				),
+			);
+
+			$this->scripts = array(
+				array(
+					'handle' => 'tech-common-js',
+					'src' => plugins_url( '/assets/js/commons.js', __FILE__ ),
+					'deps' => array(),
+					'version' => null,
+					'footer' => true
+				),
+			);
+
+			$this->register_styles();
+			$this->register_scripts();
+
+			add_filter('the_excerpt', 'do_shortcode');
+
+			add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_public_styles' ] );
+
+			add_action( 'admin_menu', [ $this, 'create_settings_page' ] );
+			add_action( 'admin_init', [ $this, 'register_settings' ] );
+			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_styles' ] );
+			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_scripts' ] );
+
+
+		}
+
+		function register_styles() {
+
+			foreach($this->styles as $style) {
+				wp_register_style( $style['handle'], $style['src'], $style['deps'], $style['version'], $style['media'] );
+			}
+
+		}
+
+		function register_scripts() {
+
+			foreach($this->scripts as $script) {
+				wp_register_script( $script['handle'], $script['src'], $script['deps'], $script['version'], $script['footer'] );
+			}
+
+		}
+
+		function enqueue_public_styles() {
+
+			if( get_post_type() == $this->post_type) {
+
+				wp_enqueue_style( 'tech-styles' );
+			}
+
+		}
+
+		function enqueue_admin_styles( $hook_suffix ) {
+
+			$cpt = 'profiles';
+
+		    if( in_array($hook_suffix, array('post.php', 'post-new.php') ) ){
+		        $screen = get_current_screen();
+
+		        if( is_object( $screen ) && $cpt == $screen->post_type ){
+
+		            wp_enqueue_style( 'tech-admin-styles' );
+
+		        }
+		    }
+
+		}
+
+		function enqueue_admin_scripts( $hook_suffix ) {
+
+			$cpt = 'profiles';
+
+		    if( in_array($hook_suffix, array('post.php', 'post-new.php') ) ){
+		        $screen = get_current_screen();
+
+		        if( is_object( $screen ) && $cpt == $screen->post_type ){
+
+		            wp_enqueue_script( 'tech-common-js' );
+
+		        }
+		    }
+
+		}
+
+		function create_settings_page() {
+
+			add_submenu_page('edit.php?post_type=profiles', 'Tech Profiles Settings', 'Settings', 'edit_posts', 'tech-pro-settings', [ $this, 'render_settings_page' ] );
+
+			register_setting( 'lnb-tech-pro-group', 'lnb-tech-pro-options' );
+		}
+
+		function render_settings_page() {
+
+			require_once( plugin_dir_path( __FILE__ ) . '/lib/templates/admin-settings.php' );
+
+		}
+
+		function register_settings() {
+
+			$data = get_option( 'lnb-tech-pro-options', true );
+
+			add_settings_section(
+				'section_general',
+				'General Settings',
+				[ $this, 'render_settings_section' ],
+				'lnb-tech-pro-settings'
+			);
+
+			add_settings_field(
+			'section_general_slug',
+			'Tech Profiles Slug',
+			[ $this, 'render_text_input' ], 
+			'lnb-tech-pro-settings',
+			'section_general',
+			array(
+				'label_for' => 'section_general_slug',
+				'name' => 'slug',
+				'value' => esc_attr( $data['slug'] ),
+				'option_name' => 'lnb-tech-pro-options',
+				'placeholder' => 'profiles is the default'
+				)
+			);
+
+		}
+
+		function render_settings_section() {
+		}
+
+		function render_text_input( $args ) {
+			printf( '<input placeholder="%5$s" name="%1$s[%2$s]" id="%3$s" value="%4$s" class="regular-text">',
+		        $args['option_name'],
+		        $args['name'],
+		        $args['label_for'],
+		        $args['value'],
+		        $args['placeholder']
+		    );
+		}
 	}
 
 }
-
-function techprofile_js_scripts() {
-	/* Register our script. */
-   if ( is_admin() ) {
-		wp_enqueue_media();
-
-		wp_register_script( 'tech-commons', plugins_url( '/assets/js/commons.js', __FILE__ ), array(), null, true );
-		wp_enqueue_script( 'tech-commons' );
-        
-		/* Register Admin Styles */
-        wp_register_style( 'tech-admin-styles', plugins_url( '/assets/css/tech-admin-styles.css', __FILE__ ) );
-		wp_enqueue_style( 'tech-admin-styles' );		
-   }
-}
-add_action( 'admin_enqueue_scripts', 'techprofile_js_scripts' );
-
-function techprofile_css_styles() {
-
-	if ( get_post_type() == 'profiles' ) {
-		wp_register_style( 'tech-styles', plugins_url( '/assets/css/tech-styles.min.css', __FILE__ ) );
-		wp_enqueue_style( 'tech-styles' );
-	}		
-}
-add_action('wp_enqueue_scripts', 'techprofile_css_styles');
-
-add_filter('the_excerpt', 'do_shortcode');
 
 // Register post types: Tech Profile
 add_action('init', 'tech_profile');
@@ -66,6 +198,8 @@ function tech_profile() {
 		'parent_item_colon'  => '',
 		'menu_name'          => 'Tech Profiles'
 	);	
+
+	$options = get_option( 'lnb-tech-pro-options', true );
 	
 	register_post_type(
 		'profiles',
@@ -89,7 +223,7 @@ function tech_profile() {
 			'has_archive' => true,
 			'query_var' => true,
 			'can_export' => true,
-			'rewrite' => array('slug' => 'meet-the-team',),
+			'rewrite' => array('slug' => $options['slug'] ? $options['slug'] : 'profiles',),
 			'capability_type' => 'post',
 			'show_in_rest' => true, 				
 		)
@@ -303,23 +437,23 @@ function remove_tech_excerpt_fields() {
 	//Load Additional Files
 	define('TechPro_MAIN', plugin_dir_path( __FILE__ ));
 	
-	// Load Custom Shortcodes
-	require_once(TechPro_MAIN . '/shortcode.php');
+	// // Load Custom Shortcodes
+	// require_once(TechPro_MAIN . '/shortcode.php');
 
 	require_once(TechPro_MAIN . '/class-nn-tech-api.php');
 
-add_filter('rest_api_init', 'test_tech_profiles_api_fields');
+add_filter('rest_api_init', 'lnb_tech_pro_api_fields');
 
-function test_tech_profiles_api_fields() {
+function lnb_tech_pro_api_fields() {
 	register_rest_field( 'profiles',
    'info',
    array(
-      'get_callback'    => 'test_profiles_api_fields_get_cb',
+      'get_callback'    => 'lnb_tech_pro_api_fields_get_cb',
    )
 	);
 }
 
-function test_profiles_api_fields_get_cb($object, $field, $request) {
+function lnb_tech_pro_api_fields_get_cb($object, $field, $request) {
 	$tech_review_data = NN_Tech_API::get_nn_data();
 	$name = get_post_meta( $object['id'], 'profile_bio_name', true);
 	$image = get_the_post_thumbnail_url( $object['id'] );
@@ -366,6 +500,12 @@ function test_profiles_api_fields_get_cb($object, $field, $request) {
 		);
 
 	return $response;
+}
+
+new LeadsNearby_Tech_Profiles;
+
+if ( is_admin() ) {
+    new GitHubPluginUpdater( __FILE__, 'LeadsNearby', 'lnb-tech-pro' );
 }
 
 ?>
