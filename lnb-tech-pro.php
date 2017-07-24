@@ -3,7 +3,7 @@
 Plugin Name: LeadsNearby Tech Profiles
 Plugin URI: http://leadsnearby.com
 Description: Creates Tech Profiles with Nearby Now Plugin capability.
-Version: 1.1.0
+Version: 1.1.1
 Author: Leads Nearby
 Author URI: http://leadsnearby.com
 License: GPLv2
@@ -163,7 +163,7 @@ if( ! class_exists( 'LeadsNearby_Tech_Profiles' ) ) {
 					'name' => 'slug',
 					'value' => esc_attr( $data['slug'] ),
 					'option_name' => 'lnb-tech-pro-options',
-					'placeholder' => 'profiles is the default'
+					'desc' => 'If nothing is specified, "profiles" will be used'
 					)
 				);
 
@@ -188,17 +188,17 @@ if( ! class_exists( 'LeadsNearby_Tech_Profiles' ) ) {
 		}
 
 		function render_text_input( $args ) {
-			printf( '<input placeholder="%5$s" name="%1$s[%2$s]" id="%3$s" value="%4$s" class="regular-text">',
+			printf( '<input name="%1$s[%2$s]" id="%3$s" value="%4$s" class="regular-text"><p><em class="small">%5$s</em></p>',
 		        $args['option_name'],
 		        $args['name'],
 		        $args['label_for'],
 		        $args['value'],
-		        $args['placeholder']
+		        $args['desc']
 		    );
 		}
 
 		function render_checkbox_input( $args ) {
-			printf( '<input type="checkbox" name="%1$s[%2$s]" id="%3$s" %4$s class="regular-text">',
+			printf( '<input type="checkbox" name="%1$s[%2$s]" id="%3$s" %4$s>',
 		        $args['option_name'],
 		        $args['name'],
 		        $args['label_for'],
@@ -216,7 +216,7 @@ function tech_profile() {
 	
 	$labels = array(
 		'name'               => _x( 'Tech Profiles', 'post type general name' ),
-		'singular_name'      => _x( 'Tech Profiles', 'post type singular name' ),
+		'singular_name'      => _x( 'Tech Profile', 'post type singular name' ),
 		'add_new'            => _x( 'Add New', 'Profiles' ),
 		'add_new_item'       => __( 'Add New Tech Profile' ),
 		'edit_item'          => __( 'Edit Tech Profile' ),
@@ -259,7 +259,9 @@ function tech_profile() {
 			'show_in_rest' => true, 				
 		)
 	);
+
 	flush_rewrite_rules();
+
 	register_taxonomy_for_object_type('tech', 'profiles');	
 	
 }
