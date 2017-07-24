@@ -36,7 +36,15 @@ if( ! class_exists( 'NN_Tech_API' ) ) :
 		        		)
 					);
 
-				$tech_query = new WP_Query( $args );
+				$tech_query = get_transient( 'nn_tech_data_query' );
+
+				if( ! $tech_query ) {
+
+					$tech_query = new WP_Query( $args );
+
+					set_transient( 'nn_tech_data_query', $tech_query, 30*24*60*60 );
+
+				}
 
 				if( $tech_query->have_posts() ) :
 					while( $tech_query->have_posts() ) : $tech_query->the_post();
@@ -78,6 +86,7 @@ if( ! class_exists( 'NN_Tech_API' ) ) :
 		public static function clear_data() {
 
 			delete_transient( 'nn_tech_data' );
+			delete_transient( 'nn_tech_data_query' );
 
 		}
 
