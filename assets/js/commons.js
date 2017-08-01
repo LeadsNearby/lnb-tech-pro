@@ -1,4 +1,56 @@
-jQuery(document).ready(function(){
+var parent = document.getElementById('certification-container');
+
+function new_certification_container() {
+	var currentCount = parent.children.length;
+	var newCount = currentCount + 1;
+
+	var node = document.createElement('div');
+	node.id = 'certification_' + newCount;
+	node.className = 'field-element';
+
+	var closeSpan = document.createElement('span');
+	closeSpan.className = 'delete-row';
+
+	var certName = document.createElement('input');
+	certName.name = 'tech_profile_meta[certifications][' + newCount + '][name]';
+	certName.type = 'text';
+
+	var certImage = document.createElement('input');
+	certImage.name = 'tech_profile_meta[certifications][' + newCount + '][image]';
+	certImage.type = 'hidden';
+	certImage.value = '';
+
+	var certImagePlaceholder = document.createElement('img');
+	certImagePlaceholder.src = "#";
+
+	var certImageSelect = document.createElement('a');
+	certImageSelect.id = 'image_selector_' + newCount;
+	certImageSelect.href = '#';
+	// certImageSelect.onclick = function() { alert('You clicked select for cert image' + newCount ) };
+	certImageSelect.appendChild( document.createTextNode('Select image') );
+
+	// var spacer = document.createElement('p');
+	// var spacerText = document.createTextNode('Container ' + ( currentCount + 1 ) );
+
+	// spacer.appendChild( spacerText );
+
+	node.appendChild( closeSpan );
+	node.appendChild( certName );
+	node.appendChild( certImage );
+	node.appendChild( certImagePlaceholder );
+	node.appendChild( certImageSelect );
+
+	parent.appendChild(node);
+}
+
+jQuery(document).ready(function($){
+
+	$('.tab-nav-item').click( function(e) {
+		e.preventDefault();
+		var id = $(this).attr('href')
+		$(this).addClass('active').siblings().removeClass('active');
+		$( id ).addClass('active').siblings().removeClass('active');
+	});
  
 	//Admin Image loader Script
     var custom_uploader;
