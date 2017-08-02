@@ -25,6 +25,7 @@ if( ! class_exists( 'LeadsNearby_Tech_Profiles_Admin' ) ) :
 		}
 
 		public function init() {
+			add_action( 'admin_init', [ $this, 'check_migration' ] );
 			add_action( 'admin_menu', [ $this, 'create_settings_page' ] );
 			add_action( 'admin_init', [ $this, 'register_settings' ] );
 			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_styles' ] );
@@ -154,6 +155,18 @@ if( ! class_exists( 'LeadsNearby_Tech_Profiles_Admin' ) ) :
 		public function load_metaboxes() {
 
 			LeadsNearby_Tech_Profiles_Metaboxes::getInstance()->init();
+
+		}
+
+		public function check_migration() {
+
+			$migrated = get_option( 'lnb-tech-pro-options-migrated' );
+
+			if( ! $migrated ) {
+
+				LeadsNearby_Tech_Profiles_Migrator::getInstance()->getStarted();
+
+			}
 
 		}
 
