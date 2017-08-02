@@ -46,34 +46,67 @@ if( ! class_exists( 'LeadsNearby_Tech_Profiles_Metaboxes' ) ) :
 
 		public function display_meta_boxes( $post, $metabox ) {
 
-			wp_nonce_field( plugin_basename(__FILE__), self::$meta_key );
+			$options = LeadsNearby_Tech_Profiles::$options;
+			$fields = get_post_meta( $post->ID, self::$meta_key, true );
+
+			wp_nonce_field( plugin_basename( __FILE__ ), self::$meta_key );
 
 			ob_start(); ?>
 
 			<div id='tech-profiles-meta-tabs' class="lnb-tabs">
 				<div class="tab-nav-group">
-					<a class="dashicons-before dashicons-businessman tab-nav-item active" href="#tech-profiles-meta-tabs-about">About Tech</a></li>
-					<a class="dashicons-before dashicons-awards tab-nav-item" href="#tech-profiles-meta-tabs-certifications">Certifications</a>
+					<a data-tab="1" class="dashicons-before dashicons-businessman tab-nav-item active" href="#tech-profiles-meta-tabs-about"><?php echo $options['about']['title']; ?></a></li>
+					<a data-tab="2" class="dashicons-before dashicons-awards tab-nav-item" href="#tech-profiles-meta-tabs-certifications"><?php echo $options['certifications']['title']; ?></a>
+					<?php if ( is_plugin_active( 'nn-reviews/nn-reviews.php' ) ) { ?>
+					<a data-tab="3" class="dashicons-before dashicons-star-filled tab-nav-item" href="#tech-profiles-meta-tabs-nn">Nearby Now</a>
+					<?php } ?>
 				</div>
-				<?php
-					$options = LeadsNearby_Tech_Profiles::$options;
-					$fields = get_post_meta( $post->ID, self::$meta_key, true );
-				?>
 				<div class="tabs-group">
-					<div id="tech-profiles-meta-tabs-about" class="tab active">
-						<?php foreach( $options['about'] as $option => $options ) { ?>
+					<div data-tab="1" id="tech-profiles-meta-tabs-about" class="tab active">
+						<?php foreach( $options['about']['fields'] as $i => $value ) { ?>
 							<div class="tech-profiles-meta-field">
-								<label for="tech_profile_meta_<?php echo $option; ?>"><?php echo $options['title']; ?></label>
-								<input id="tech_profile_meta_<?php echo $option; ?>" type="text" class="profile-bio" name="tech_profile_meta[about][<?php echo $option; ?>]" >
+								<label for="tech_profile_meta_<?php echo $i; ?>"><?php echo $value['title']; ?></label>
+								<?php if( $value['desc'] ) { ?>
+								<span><?php echo $value['desc']; ?></span>
+								<?php } ?>
+								<?php if( $value['type'] && $value['type'] == 'textarea' ) { ?>
+								<textarea rows="8" id="tech_profile_meta_<?php echo $i; ?>" class="profile-bio" name="tech_profile_meta[about][<?php echo $i; ?>]"><?php echo $fields['about'][$i] ?></textarea>
+								<?php } else { ?>
+								<input id="tech_profile_meta_<?php echo $i; ?>" type="text" class="profile-bio" name="tech_profile_meta[about][<?php echo $i; ?>]" value="<?php echo $fields['about'][$i] ?>">
+								<?php } ?>
 							</div>
 						<?php } ?>
-						</pre>
 					</div>
-					<div id="tech-profiles-meta-tabs-certifications" class="tab">
-						<pre>
-							<?php print_r( $fields['certifications'] ); ?>
-						</pre>
+					<div data-tab="2" id="tech-profiles-meta-tabs-certifications" class="tab">
+						<div id="certification-container" class="tech-profiles-meta-field-group">
+							<?php foreach( $fields['certifications'] as $i => $sub_options ) { ?>
+							<div data-index="<?php echo $i; ?>" id="certification_<?php echo $i; ?>" class="tech-profiles-meta-field tech-profiles-meta-field-certification">
+								<?php if( $i != 0 ) { ?>
+								<span data-index="<?php echo $i; ?>" class="delete-row dashicons dashicons-no-alt"></span>
+								<?php } ?>
+								<input placeholder="Name of certification" type="text" name="tech_profile_meta[certifications][<?php echo $i; ?>][name]" value="<?php echo $fields['certifications'][$i]['name']; ?>">
+								<input data-image="<?php echo $i; ?>" type="hidden" name="tech_profile_meta[certifications][<?php echo $i; ?>][image]" value="<?php echo $fields['certifications'][$i]['image']; ?>">
+								<?php $image_placeholder = wp_get_attachment_image_src( $fields['certifications'][$i]['image'], 'thumbnail' ); ?>
+								<img data-image-placeholder="<?php echo $i; ?>" src="<?php echo $image_placeholder[0]; ?>" />
+								<a data-selector="<?php echo $i; ?>" class="upload_image_button" href="#">Select image</a>
+							</div>
+							<?php } ?>
+						</div>
+						<a onclick="new_certification_container()" href="javascript:void(0)">A new certification</a>
 					</div>
+					<?php if ( is_plugin_active( 'nn-reviews/nn-reviews.php' ) ) { ?>
+					<div data-tab="3" id="tech-profiles-meta-tabs-nn" class="tab">
+						<?php foreach( $options['nearby-now']['fields'] as $i => $value ) { ?>
+							<div class="tech-profiles-meta-field">
+								<label for="tech_profile_meta_<?php echo $i; ?>"><?php echo $value['title']; ?></label>
+								<?php if( $value['desc'] ) { ?>
+								<span><?php echo $options['desc']; ?></span>
+								<?php } ?>
+								<input id="tech_profile_meta_<?php echo $i; ?>" type="text" class="profile-bio" name="tech_profile_meta[nn][<?php echo $i; ?>]" value="<?php echo $fields['nn'][$i] ? $fields['nn'][$i] : '';  ?>">
+							</div>
+						<?php } ?>
+					</div>
+					<?php } ?>
 				</div>
 			</div>
 
@@ -91,7 +124,7 @@ if( ! class_exists( 'LeadsNearby_Tech_Profiles_Metaboxes' ) ) :
 		    }
 	       
 	       	// Make sure post isn't being autosaved
-		   	if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE) {
+		   	if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 
 		    	return $id;
 
