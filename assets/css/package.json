@@ -9,7 +9,7 @@
   "author": "Andrew Gillingham",
   "license": "ISC",
   "devDependencies": {
-    "gulp": "latest",
+    "gulp": "^3.9.1",
     "gulp-autoprefixer": "latest",
     "gulp-postcss": "latest",
     "gulp-sass": "latest"
