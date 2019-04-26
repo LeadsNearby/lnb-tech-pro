@@ -21,8 +21,11 @@
 }
 
 .tech-profiles-category {
-  display: flex;
-  flex-wrap: wrap;
+  //   display: flex;
+  //   flex-wrap: wrap;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
 }
 
 .tech-profile {

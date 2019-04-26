@@ -12,8 +12,9 @@
         flex-basis: 30%; } }
 
 .tech-profiles-category {
-  display: flex;
-  flex-wrap: wrap; }
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(225px, 1fr)); }
 
 .tech-profile-image-wrapper {
   flex: 1;
