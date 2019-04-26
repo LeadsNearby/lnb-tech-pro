@@ -21,14 +21,10 @@
   Tabs
 -------------------- */
 .lnb-tabs {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   background-color: whitesmoke; }
   .lnb-tabs .tab-nav-group, .lnb-tabs .tabs-group {
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1; }
+    flex: 1; }
   .lnb-tabs .tab-nav-group {
     max-width: 225px;
     border-right: 1px solid #e6e6e6; }
@@ -40,11 +36,9 @@
       line-height: 35px;
       text-decoration: none;
       outline: none !important;
-      -webkit-box-shadow: none !important;
-              box-shadow: none !important;
+      box-shadow: none !important;
       background-color: #ededed;
       color: #444 !important;
-      -webkit-transition: background-color 0.25s;
       transition: background-color 0.25s; }
       .lnb-tabs .tab-nav-group .tab-nav-item:before {
         height: 35px;
@@ -75,7 +69,6 @@
       width: 100%;
       height: 100%;
       padding: 1rem;
-      -webkit-transition: opacity 0.25s;
       transition: opacity 0.25s; }
       .lnb-tabs .tabs-group .tab.active {
         z-index: 2;
