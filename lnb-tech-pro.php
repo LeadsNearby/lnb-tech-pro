@@ -522,9 +522,10 @@ function lnb_tech_pro_api_fields_get_cb($object, $field, $request) {
 
 new LeadsNearby_Tech_Profiles;
 
-require_once plugin_dir_path(__FILE__) . 'lib/updater/github-updater.php';
-if (is_admin()) {
-    new GitHubPluginUpdater(__FILE__, 'LeadsNearby', 'lnb-tech-pro');
-}
+add_action('admin_init', function () {
+    if (class_exists('\lnb\core\GitHubPluginUpdater')) {
+        new \lnb\core\GitHubPluginUpdater(__FILE__, 'lnb-tech-pro');
+    }
+}, 99);
 
 ?>
