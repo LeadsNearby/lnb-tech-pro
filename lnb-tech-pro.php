@@ -47,11 +47,10 @@ if (!class_exists('LeadsNearby_Tech_Profiles')) {
                 ),
             );
 
-            $this->register_styles();
-            $this->register_scripts();
-
             add_filter('the_excerpt', 'do_shortcode');
 
+            add_action('wp_enqueue_scripts', [$this, 'register_styles']);
+            add_action('wp_enqueue_scripts', [$this, 'register_scripts']);
             add_action('wp_enqueue_scripts', [$this, 'enqueue_public_styles']);
 
             add_action('admin_menu', [$this, 'create_settings_page']);
