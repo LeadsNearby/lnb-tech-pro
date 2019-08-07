@@ -257,11 +257,10 @@ function tech_taxonomies() {
         'profiles',
         array(
             'public' => true,
-            'show_in_nav_menus' => true,
-            'hierarchical' => true,
+            'show_in_nav_menus' => false,
+            'hierarchical' => false,
             'label' => 'Profile Categories',
             'query_var' => true,
-            'rewrite' => true,
         )
     );
 }
