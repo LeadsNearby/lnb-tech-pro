@@ -8,7 +8,7 @@
 get_header();
 $options = get_option('lnb-tech-pro-options', true);
 $sprite = isset($options['sprite']) ? $options['sprite'] : false;
-$raw_categories = get_categories(['taxonomy' => 'profiles_category']);
+$raw_categories = get_categories(['taxonomy' => 'profiles_category', 'orderby' => 'term_order']);
 $categories = array();
 foreach ($raw_categories as $raw_category) {
     $categories[$raw_category->slug] = $raw_category->name;
