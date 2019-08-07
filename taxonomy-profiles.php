@@ -16,7 +16,12 @@ foreach ($raw_categories as $raw_category) {
 ?>
 <div class="tech-profile content-area tech-profiles-category profile-category <?php echo $sprite ? 'tech-profiles-sprites' : ''; ?>">
 <?php
-if (!empty($categories)) {
+if (is_tax()) {
+    if (have_posts()): while (have_posts()): the_post();
+            require 'lib/templates/profile-card.php';
+        endwhile;
+    endif;
+} elseif (!empty($categories)) {
     foreach ($categories as $term_slug => $term_name) {
         $query = new WP_Query([
             'post_type' => 'profiles',
