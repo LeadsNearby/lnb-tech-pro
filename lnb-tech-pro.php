@@ -127,7 +127,7 @@ if (!class_exists('LeadsNearby_Tech_Profiles')) {
 
         public function register_settings() {
 
-            $data = get_option('lnb-tech-pro-options', true);
+            $data = get_option('lnb-tech-pro-options');
 
             add_settings_section(
                 'section_general',
@@ -160,7 +160,7 @@ if (!class_exists('LeadsNearby_Tech_Profiles')) {
                 array(
                     'label_for' => 'section_general_sprite',
                     'name' => 'sprite',
-                    'value' => esc_attr($data['sprite']),
+                    'value' => esc_attr(isset($data['sprite']) ? $data['sprite'] : false),
                     'option_name' => 'lnb-tech-pro-options',
                 )
             );
@@ -186,8 +186,7 @@ if (!class_exists('LeadsNearby_Tech_Profiles')) {
                 $args['option_name'],
                 $args['name'],
                 $args['label_for'],
-                $args['value'] == 'on' ? 'checked' : '',
-                $args['placeholder']
+                $args['value'] == 'on' ? 'checked' : ''
             );
         }
     }

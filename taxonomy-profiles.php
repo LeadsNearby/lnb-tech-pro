@@ -7,8 +7,9 @@
 
 get_header();
 $options = get_option( 'lnb-tech-pro-options', true );
+$sprite = isset($options['sprite']) ? $options['sprite'] : false;
 ?>
-		<div class="tech-profile content-area tech-profiles-category profile-category <?php echo $options['sprite'] ? 'tech-profiles-sprites' : ''; ?>">
+		<div class="tech-profile content-area tech-profiles-category profile-category <?php echo $sprite ? 'tech-profiles-sprites' : ''; ?>">
 			<?php if (have_posts()) : while (have_posts()) : the_post(); ?>	
 			
 				<profile id="post-<?php the_ID(); ?>">
@@ -19,7 +20,7 @@ $options = get_option( 'lnb-tech-pro-options', true );
 							if(has_post_thumbnail()) {                    
 								$image_src = wp_get_attachment_image_src( get_post_thumbnail_id(),'full' );
 								 echo '<a href="'.get_permalink().'" style="background-image:url('.$image_src[0].')">';
-								 echo $options['sprite'] ? '<span class="profile-image-overlay" style="background-image:url('.$image_src[0].')"></span>' : null;
+								 echo $sprite ? '<span class="profile-image-overlay" style="background-image:url('.$image_src[0].')"></span>' : null;
 								 echo '</a>';
 							} ?>
 						</div>	
