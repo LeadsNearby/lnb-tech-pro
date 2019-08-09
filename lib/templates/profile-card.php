@@ -1,5 +1,5 @@
 <article id="post-<?php the_ID();?>">
-	<div class="tech-container">
+	<div class="tech-container" style="margin-bottom: 3em">
 		<div class="image-frame">
 						<?php
 // Default, blog-size thumbnail
