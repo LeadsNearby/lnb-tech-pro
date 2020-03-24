@@ -3,7 +3,7 @@
 Plugin Name: LeadsNearby Tech Profiles
 Plugin URI: http://leadsnearby.com
 Description: Creates Tech Profiles with Nearby Now Plugin capability.
-Version: 1.2.0
+Version: 1.5.0
 Author: Leads Nearby
 Author URI: http://leadsnearby.com
 License: GPLv2
