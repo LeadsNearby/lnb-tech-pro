@@ -9,7 +9,7 @@ if (has_post_thumbnail()) {
     if ($template == 'hypercore') {
 		echo '<a class="hyper-lazyload-bg" href="' . get_permalink() . '" data-bg-image="' . $image_src[0] . '">';
 	} else {
-		echo '<a href="' . get_permalink() . '" style="background-image: url("' . $image_src[0] . '")">';
+		echo '<a href="' . get_permalink() . '" style="background-image: url(' . $image_src[0] . ')">';
 	}
     echo $sprite ? '<span class="profile-image-overlay" style="background-image:url(' . $image_src[0] . ')"></span>' : null;
     echo '</a>';
