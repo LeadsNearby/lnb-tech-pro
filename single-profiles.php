@@ -147,20 +147,20 @@ get_header(); ?>
 			
 </div><!-- #tech-content -->
 <script>
-	jQuery(document).ready(function($) {
-		var nnRating = parseFloat($('[itemprop="ratingValue"]').text());
-		var nnReviewCount = $('[itemprop="reviewCount"]').text();
-
-		if (!nnReviewCount) {
-			$('.profile-nn-stats-container').hide();
-			// nnRating = "0";
-			// nnReviewCount = "0"
-		}
-
-		// $('#profile-tech-rating').text(parseFloat(nnRating).toFixed(1));
-		$('#profile-tech-rating').text( (Math.floor(nnRating * 10) / 10).toFixed(1) );
-		$('#profile-tech-reviews-num').text(nnReviewCount);
-	})
+(function() {
+	const holder = document.querySelector('.nn-review-inner-cont > div');
+	if(!holder) {
+		return;
+	}
+	const nnRating = parseFloat(holder.children[1].innerText);
+	const nnReviewCount = holder.children[2].innerText;
+	if (!nnReviewCount) {
+		document.querySelector('.profile-nn-stats-container').remove();
+	}
+	// $('#profile-tech-rating').text(parseFloat(nnRating).toFixed(1));
+	document.querySelector('#profile-tech-rating').innerText = (Math.floor(nnRating * 10) / 10).toFixed(1);
+	document.querySelector('#profile-tech-reviews-num').innerText = nnReviewCount;
+})();
 </script>
 
 <?php get_footer(); ?>
