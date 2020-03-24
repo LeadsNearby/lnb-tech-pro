@@ -4,8 +4,13 @@
 						<?php
 // Default, blog-size thumbnail
 if (has_post_thumbnail()) {
-    $image_src = wp_get_attachment_image_src(get_post_thumbnail_id(), 'full');
-    echo '<a href="' . get_permalink() . '" style="background-image:url(' . $image_src[0] . ')">';
+	$image_src = wp_get_attachment_image_src(get_post_thumbnail_id(), 'full');
+	$template = strtolower(wp_get_theme()->template);
+    if ($template == 'hypercore') {
+		echo '<a class="hyper-lazyload-bg" href="' . get_permalink() . '" data-bg-image="' . $image_src[0] . '">';
+	} else {
+		echo '<a href="' . get_permalink() . '" style="background-image: url("' . $image_src[0] . '")">';
+	}
     echo $sprite ? '<span class="profile-image-overlay" style="background-image:url(' . $image_src[0] . ')"></span>' : null;
     echo '</a>';
 }?>
