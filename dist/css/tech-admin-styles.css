@@ -1,0 +1,93 @@
+.small {
+  font-size:12px;
+  color:#555;
+  font-weight:400
+}
+.profile-bio {
+  width:85%
+}
+#tech_profile_meta .inside {
+  margin:0;
+  padding:0
+}
+#tech_profile_meta label {
+  font-weight:700;
+  font-size:115%;
+  display:block;
+  margin-bottom:8px
+}
+.lnb-tabs {
+  display:flex;
+  background-color:#f5f5f5
+}
+.lnb-tabs .tab-nav-group,
+.lnb-tabs .tabs-group {
+  flex:1
+}
+.lnb-tabs .tab-nav-group {
+  max-width:225px;
+  border-right:1px solid #e6e6e6
+}
+.lnb-tabs .tab-nav-group .tab-nav-item {
+  position:relative;
+  display:block;
+  padding:1rem;
+  font-size:15px;
+  line-height:35px;
+  text-decoration:none;
+  outline:0!important;
+  box-shadow:none!important;
+  background-color:#ededed;
+  color:#444!important;
+  transition:background-color .25s
+}
+.lnb-tabs .tab-nav-group .tab-nav-item:before {
+  height:35px;
+  width:35px;
+  font-size:35px;
+  margin-right:8px
+}
+.lnb-tabs .tab-nav-group .tab-nav-item:hover {
+  background-color:#e6e6e6
+}
+.lnb-tabs .tab-nav-group .tab-nav-item.active {
+  background-color:#dcdcdc
+}
+.lnb-tabs .tab-nav-group .tab-nav-item.active:after {
+  content:'';
+  position:absolute;
+  left:100%;
+  top:50%;
+  margin-top:-13px;
+  border-bottom:13px solid transparent;
+  border-top:13px solid transparent;
+  border-left:10px solid #dcdcdc
+}
+.lnb-tabs .tabs-group {
+  position:relative
+}
+.lnb-tabs .tabs-group .tab {
+  opacity:0;
+  position:absolute;
+  z-index:1;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  padding:1rem;
+  transition:opacity .25s
+}
+.lnb-tabs .tabs-group .tab.active {
+  z-index:2;
+  opacity:1
+}
+.lnb-tabs .tabs-group .tab:first-child {
+  position:relative
+}
+.tech-profiles-meta-field {
+  margin-bottom:16px
+}
+.tech-profiles-meta-field input {
+  height:35px
+}
+/*# sourceMappingURL=tech-admin-styles.css.map */

@@ -24,14 +24,14 @@ if (!class_exists('LeadsNearby_Tech_Profiles')) {
       $this->styles = array(
         array(
           'handle'  => 'tech-styles',
-          'src'     => plugins_url('/assets/css/tech-styles.css', __FILE__),
+          'src'     => plugins_url('/dist/css/tech-styles.min.css', __FILE__),
           'deps'    => array(),
           'version' => null,
           'media'   => 'all',
         ),
         array(
           'handle'  => 'tech-admin-styles',
-          'src'     => plugins_url('/assets/css/tech-admin-styles.css', __FILE__),
+          'src'     => plugins_url('/dist/css/tech-admin-styles.min.css', __FILE__),
           'deps'    => array(),
           'version' => null,
           'media'   => 'all',
@@ -122,7 +122,7 @@ if (!class_exists('LeadsNearby_Tech_Profiles')) {
 
     public function render_settings_page() {
 
-      require_once plugin_dir_path(__FILE__) . '/lib/templates/admin-settings.php';
+      require_once plugin_dir_path(__FILE__) . '/inc/templates/admin-settings.php';
 
     }
 
@@ -471,7 +471,7 @@ define('TechPro_MAIN', plugin_dir_path(__FILE__));
 // // Load Custom Shortcodes
 // require_once(TechPro_MAIN . '/shortcode.php');
 
-require_once TechPro_MAIN . 'lib/class-nn-tech-api.php';
+require_once TechPro_MAIN . 'inc/class-nn-tech-api.php';
 add_filter('rest_api_init', 'lnb_tech_pro_api_fields');
 
 function lnb_tech_pro_api_fields() {

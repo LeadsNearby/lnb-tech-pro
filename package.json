@@ -1,0 +1,57 @@
+{
+  "name": "lnb-web-project",
+  "version": "1.1.0",
+  "description": "A base project setup for LNB projects",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andrew Gillingham",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/register": "^7.10.1",
+    "browser-sync": "^2.26.7",
+    "chalk": "^4.1.0",
+    "chokidar": "^3.4.0",
+    "clean-css": "^4.2.3",
+    "del-cli": "^3.0.1",
+    "eslint": "^7.2.0",
+    "eslint-config-google": "^0.14.0",
+    "glob": "^7.1.6",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-babel": "^8.0.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-error-handle": "^1.0.1",
+    "gulp-minify": "^3.1.0",
+    "gulp-postcss": "^8.0.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^4.1.0",
+    "gulp-sass-bulk-import": "^1.0.1",
+    "gulp-sourcemaps": "^2.6.5",
+    "node-sass": "^4.14.1",
+    "npm-run-all": "^4.1.5",
+    "path": "^0.12.7",
+    "sftp-client-promise": "^1.0.4"
+  },
+  "dependencies": {
+    "normalize-scss": "^7.0.1"
+  },
+  "browserslist": "> 2%",
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "browsers": [
+              "> 2%"
+            ]
+          }
+        }
+      ]
+    ]
+  }
+}
