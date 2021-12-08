@@ -469,7 +469,7 @@ function profiles_template_function($template_path) {
 define('TechPro_MAIN', plugin_dir_path(__FILE__));
 
 // // Load Custom Shortcodes
-// require_once(TechPro_MAIN . '/shortcode.php');
+require_once TechPro_MAIN . '/inc/shortcodes.php';
 
 require_once TechPro_MAIN . 'inc/class-nn-tech-api.php';
 add_filter('rest_api_init', 'lnb_tech_pro_api_fields');
