@@ -11,66 +11,67 @@ $sprite = isset($options['sprite']) ? $options['sprite'] : false;
 $raw_categories = get_categories(['taxonomy' => 'profiles_category', 'orderby' => 'term_order']);
 $categories = array();
 foreach ($raw_categories as $raw_category) {
-    $categories[$raw_category->slug] = $raw_category->name;
+  $categories[$raw_category->slug] = $raw_category->name;
 }
 ?>
-<div class="tech-profile content-area tech-profiles-category profile-category <?php echo $sprite ? 'tech-profiles-sprites' : ''; ?>">
-<?php
+<div
+  class="tech-profile content-area tech-profiles-category profile-category <?php echo $sprite ? 'tech-profiles-sprites' : ''; ?>">
+  <?php
 if (is_tax()) {
-    if (have_posts()): while (have_posts()): the_post();
-            require 'lib/templates/profile-card.php';
-        endwhile;
-    endif;
+  if (have_posts()): while (have_posts()): the_post();
+      require 'inc/templates/profile-card.php';
+    endwhile;
+  endif;
 } elseif (!empty($categories)) {
-    foreach ($categories as $term_slug => $term_name) {
-        $query = new WP_Query([
-            'post_type' => 'profiles',
-            'posts_per_page' => -1,
-            'order' => 'ASC',
-            'tax_query' => array(
-                array(
-                    'taxonomy' => 'profiles_category',
-                    'field' => 'slug',
-                    'terms' => $term_slug,
-                ),
-            ),
-        ]
-        );
-        if ($query->have_posts()):
-            echo "<h3 class='tech-profile-category-title' style='grid-column: 1 / -1'>{$term_name}</h3>";
-            while ($query->have_posts()): $query->the_post();
-                require 'lib/templates/profile-card.php';
-            endwhile;
-        endif;
-        wp_reset_postdata();
-    }
-    $uncategorized_query = new WP_Query([
-        'post_type' => 'profiles',
-        'posts_per_page' => -1,
-        'order' => 'ASC',
-        'tax_query' => array(
-            array(
-                'taxonomy' => 'profiles_category',
-                'field' => 'slug',
-                'terms' => array_keys($categories),
-                'operator' => 'NOT EXISTS',
-            ),
+  foreach ($categories as $term_slug => $term_name) {
+    $query = new WP_Query([
+      'post_type'      => 'profiles',
+      'posts_per_page' => -1,
+      'order'          => 'ASC',
+      'tax_query'      => array(
+        array(
+          'taxonomy' => 'profiles_category',
+          'field'    => 'slug',
+          'terms'    => $term_slug,
         ),
-    ]);
-    if ($uncategorized_query->have_posts()):
-        echo "<h3 class='tech-profile-category-title' style='grid-column: 1 / -1'>Uncategorized</h3>";
-        while ($uncategorized_query->have_posts()): $uncategorized_query->the_post();
-            require 'lib/templates/profile-card.php';
-        endwhile;
+      ),
+    ]
+    );
+    if ($query->have_posts()):
+      echo "<h3 class='tech-profile-category-title' style='grid-column: 1 / -1'>{$term_name}</h3>";
+      while ($query->have_posts()): $query->the_post();
+        require 'inc/templates/profile-card.php';
+      endwhile;
     endif;
     wp_reset_postdata();
+  }
+  $uncategorized_query = new WP_Query([
+    'post_type'      => 'profiles',
+    'posts_per_page' => -1,
+    'order'          => 'ASC',
+    'tax_query'      => array(
+      array(
+        'taxonomy' => 'profiles_category',
+        'field'    => 'slug',
+        'terms'    => array_keys($categories),
+        'operator' => 'NOT EXISTS',
+      ),
+    ),
+  ]);
+  if ($uncategorized_query->have_posts()):
+    echo "<h3 class='tech-profile-category-title' style='grid-column: 1 / -1'>Uncategorized</h3>";
+    while ($uncategorized_query->have_posts()): $uncategorized_query->the_post();
+      require 'inc/templates/profile-card.php';
+    endwhile;
+  endif;
+  wp_reset_postdata();
 } else {
-    $query = new WP_Query(['post_type' => 'profiles', 'posts_per_page' => -1, 'order' => 'ASC']);
-    if ($query->have_posts()): while ($query->have_posts()): $query->the_post();
-            require 'lib/templates/profile-card.php';
-        endwhile;
-    endif;
-    wp_reset_postdata();
+  $query = new WP_Query(['post_type' => 'profiles', 'posts_per_page' => -1, 'order' => 'ASC']);
+  if ($query->have_posts()): while ($query->have_posts()): $query->the_post();
+      require 'inc/templates/profile-card.php';
+    endwhile;
+  endif;
+  wp_reset_postdata();
 }
 
 ?>

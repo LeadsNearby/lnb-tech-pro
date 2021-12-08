@@ -1,148 +1,153 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+namespace lnb\techprofiles;
 
-if( ! class_exists( 'LeadsNearby_Tech_Profiles_Migrator' ) ) :
+if (!defined('ABSPATH')) {
+  exit;
+}
+// Exit if accessed directly
 
-	class LeadsNearby_Tech_Profiles_Migrator {
+if (!class_exists('Migrator')):
 
-		protected static $instance;
+  class Migrator {
 
-		private $old = array(
-			'profile_bio_name', // deprecate
-			'profile_bio_hometown',
-			'profile_bio_college',
-			'profile_bio_cert',
-			'profile_bio_fav',
-			'profile_bio_hobbies',
-			'profile_bio_role',
-			'profile_bio_facts',
-			'profile_bio_advice',
-			'profile_att_title',
-			'profile_att_email',
-			'profile_att_phone',
-			'profile_nbn_email',
-			'profile_nbn_count', // deprecate
-		);
+    protected static $instance;
 
-		private $map = array(
-			'about' => array(
-				'title' => 'profile_att_title',
-				'certifications' => 'profile_bio_cert',
-				'hometown' => 'profile_bio_hometown',
-				'college' => 'profile_bio_college',
-				'fav' => 'profile_bio_fav',
-				'hobbies' => 'profile_bio_hobbies',
-				'role' => 'profile_bio_role',
-				'facts' => 'profile_bio_facts',
-				'advice' => 'profile_bio_advice',
-				'bio' => null,
-			),
-			'nearby-now' => array(
-				'nn-email' => 'profile_nbn_email',
-				'nn-count' => 'profile_nbn_count'
-			),
-		);
+    private $old = array(
+      'profile_bio_name', // deprecate
+      'profile_bio_hometown',
+      'profile_bio_college',
+      'profile_bio_cert',
+      'profile_bio_fav',
+      'profile_bio_hobbies',
+      'profile_bio_role',
+      'profile_bio_facts',
+      'profile_bio_advice',
+      'profile_att_title',
+      'profile_att_email',
+      'profile_att_phone',
+      'profile_nbn_email',
+      'profile_nbn_count', // deprecate
+    );
 
-		private $profiles = array();
+    private $map = array(
+      'about'      => array(
+        'title'          => 'profile_att_title',
+        'certifications' => 'profile_bio_cert',
+        'hometown'       => 'profile_bio_hometown',
+        'college'        => 'profile_bio_college',
+        'fav'            => 'profile_bio_fav',
+        'hobbies'        => 'profile_bio_hobbies',
+        'role'           => 'profile_bio_role',
+        'facts'          => 'profile_bio_facts',
+        'advice'         => 'profile_bio_advice',
+        'bio'            => null,
+      ),
+      'nearby-now' => array(
+        'nn-email' => 'profile_nbn_email',
+        'nn-count' => 'profile_nbn_count',
+      ),
+    );
 
-		private function __construct() { }
-		private function __clone() { }
-		private function __wakeup() { }
+    private $profiles = array();
 
-		public static function getInstance() {
+    private function __construct() {}
+    private function __clone() {}
+    private function __wakeup() {}
 
-			if( ! isset( self::$instance ) ) {
+    public static function getInstance() {
 
-				self::$instance = new self();
+      if (!isset(self::$instance)) {
 
-			}
+        self::$instance = new self();
 
-			return self::$instance;
+      }
 
-		}
+      return self::$instance;
 
-		function getStarted() {
+    }
 
-			$this->get_profiles();
+    function getStarted() {
 
-			$this->migrate_meta();
+      $this->get_profiles();
 
-			$this->delete_meta();
+      $this->migrate_meta();
 
-			$this->finishUp();
-			
-		}
+      $this->delete_meta();
 
-		private function get_profiles() {
+      $this->finishUp();
 
-			$query = new WP_Query( [ 'post_type' => LeadsNearby_Tech_Profiles::$post_type, 'posts_per_page' => -1  ] );
+    }
 
-			while( $query->have_posts() ) :
-				
-				$query->the_post();
+    private function get_profiles() {
 
-				$profiles[] = array(
-					'id' => get_the_id(),
-					'title' => get_the_title(),
-				);
+      $query = new WP_Query(['post_type' => LeadsNearby_Tech_Profiles::$post_type, 'posts_per_page' => -1]);
 
-			endwhile;
+      while ($query->have_posts()):
 
-			$this->profiles = $profiles;
+        $query->the_post();
 
-		}
+        $profiles[] = array(
+          'id'    => get_the_id(),
+          'title' => get_the_title(),
+        );
 
-		public function migrate_meta() {
+      endwhile;
 
-			foreach( $this->profiles as $properties ) {
+      $this->profiles = $profiles;
 
-				$migration;
+    }
 
-				foreach( $this->map as $section => $fields ) {
+    public function migrate_meta() {
 
-					foreach( $this->map[$section] as $new => $old ) {
+      foreach ($this->profiles as $properties) {
 
-						if( $new == 'bio' ) {
+        $migration;
 
-							$migration[$section][$new] = get_the_excerpt( $properties['id'] );
+        foreach ($this->map as $section => $fields) {
 
-						} else {
+          foreach ($this->map[$section] as $new => $old) {
 
-							$migration[$section][$new] = get_post_meta( $properties['id'], $old, true );
+            if ($new == 'bio') {
 
-						}
-					}
+              $migration[$section][$new] = get_the_excerpt($properties['id']);
 
-				}
+            } else {
 
-				update_post_meta( $properties['id'], LeadsNearby_Tech_Profiles_Metaboxes::$meta_key, $migration );
+              $migration[$section][$new] = get_post_meta($properties['id'], $old, true);
 
-			}
+            }
+          }
 
-		}
+        }
 
-		public function delete_meta() {
+        update_post_meta($properties['id'], LeadsNearby_Tech_Profiles_Metaboxes::$meta_key, $migration);
 
-			foreach( $this->profiles as $properties ) {
+      }
 
-				foreach( $this->old as $old_key ) {
+    }
 
-					delete_post_meta( $properties['id'], $old_key );
+    public function delete_meta() {
 
-				}
+      foreach ($this->profiles as $properties) {
 
-			}
+        foreach ($this->old as $old_key) {
 
-		}
+          delete_post_meta($properties['id'], $old_key);
 
-		public function finishUp() {
+        }
 
-			update_option( 'lnb-tech-pro-options-migrated', true );
+      }
 
-		}
+    }
 
-	}
+    public function finishUp() {
+
+      update_option('lnb-tech-pro-options-migrated', true);
+
+    }
+
+  }
 
 endif;
 

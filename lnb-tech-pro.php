@@ -484,7 +484,7 @@ function lnb_tech_pro_api_fields() {
 }
 
 function lnb_tech_pro_api_fields_get_cb($object, $field, $request) {
-  $tech_review_data = NN_Tech_API::get_nn_data();
+  $tech_review_data = lnb\techprofiles\NNTechAPI::get_nn_data();
   $name = get_post_meta($object['id'], 'profile_bio_name', true);
   $image = get_the_post_thumbnail_url($object['id']);
   $title = get_post_meta($object['id'], 'profile_att_title', true);
