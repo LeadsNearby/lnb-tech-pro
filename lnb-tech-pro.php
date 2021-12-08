@@ -9,9 +9,11 @@ Author URI: http://leadsnearby.com
 License: GPLv2
  */
 
-if (!class_exists('LeadsNearby_Tech_Profiles')) {
+namespace lnb\techprofiles;
 
-  class LeadsNearby_Tech_Profiles {
+if (!class_exists('TechProfiles')) {
+
+  class TechProfiles {
 
     // echo Test;
     public $post_type = 'profiles';
@@ -195,7 +197,7 @@ if (!class_exists('LeadsNearby_Tech_Profiles')) {
 }
 
 // Register post types: Tech Profile
-add_action('init', 'tech_profile');
+add_action('init', 'lnb\techprofiles\tech_profile');
 function tech_profile() {
 
   $labels = array(
@@ -251,7 +253,7 @@ function tech_profile() {
 }
 
 // Build taxonomies for each post type
-add_action('init', 'tech_taxonomies');
+add_action('init', 'lnb\techprofiles\tech_taxonomies');
 function tech_taxonomies() {
   register_taxonomy(
     'profiles_category',
@@ -266,7 +268,7 @@ function tech_taxonomies() {
   );
 }
 
-add_action("admin_init", "meta_box");
+add_action("admin_init", "lnb\techprofiles\meta_box");
 function meta_box() {
 
   //Profile
@@ -433,7 +435,7 @@ function save_meta() {
   update_post_meta($post->ID, "cert_images_four", $_POST["cert_images_four"]);
 }
 
-add_action('admin_menu', 'remove_tech_excerpt_fields');
+add_action('admin_menu', 'lnb\techprofiles\remove_tech_excerpt_fields');
 function remove_tech_excerpt_fields() {
   remove_meta_box('postexcerpt', 'post', 'normal');
 }
@@ -534,4 +536,4 @@ function lnb_tech_pro_api_fields_get_cb($object, $field, $request) {
   return $response;
 }
 
-new LeadsNearby_Tech_Profiles;
+new TechProfiles;
