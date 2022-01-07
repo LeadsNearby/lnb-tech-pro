@@ -15,7 +15,6 @@ if (!class_exists('TechProfiles')) {
 
   class TechProfiles {
 
-    // echo Test;
     public $post_type = 'profiles';
     public $options = array();
     private $styles;
@@ -268,7 +267,7 @@ function tech_taxonomies() {
   );
 }
 
-add_action("admin_init", "lnb\techprofiles\meta_box");
+add_action('admin_init', 'lnb\techprofiles\meta_box');
 function meta_box() {
 
   //Profile
@@ -442,7 +441,7 @@ function remove_tech_excerpt_fields() {
 
 // Template Functions
 // Adds Template files when plugin is activated.
-add_filter('template_include', 'profiles_template_function', 1);
+add_filter('template_include', 'lnb\techprofiles\profiles_template_function', 1);
 function profiles_template_function($template_path) {
   if (get_post_type() == 'profiles') {
     if (is_single()) {
