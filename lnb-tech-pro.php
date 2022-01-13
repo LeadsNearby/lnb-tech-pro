@@ -271,11 +271,11 @@ add_action('admin_init', 'lnb\techprofiles\meta_box');
 function meta_box() {
 
   //Profile
-  add_meta_box("profile_bio", "Profile Bio", "profile_bio", "profiles", "normal", "high");
-  add_meta_box("cert_images", "Certification Images - <em class='small'>The certification images should be no more than 250px wide</em>", "cert_images", "profiles", "normal", "high");
-  add_meta_box("profile_attributes", "Profile Attributes", "profile_attributes", "profiles", "normal", "high");
-  add_meta_box("profile_nbn", "Nearby Now Attributes", "profile_nbn", "profiles", "normal", "high");
-  add_meta_box('postexcerpt', __('Excerpt'), 'post_excerpt_meta_box', 'profiles', 'normal', 'high');
+  add_meta_box("profile_bio", "Profile Bio", "lnb\\techprofiles\profile_bio", "profiles", "normal", "high");
+  add_meta_box("cert_images", "Certification Images - <em class='small'>The certification images should be no more than 250px wide</em>", "lnb\\techprofiles\cert_images", "profiles", "normal", "high");
+  add_meta_box("profile_attributes", "Profile Attributes", "lnb\\techprofiles\profile_attributes", "profiles", "normal", "high");
+  add_meta_box("profile_nbn", "Nearby Now Attributes", "profile_nbn", "lnb\\techprofiles\profiles", "normal", "high");
+  add_meta_box('postexcerpt', __('Excerpt'), 'post_excerpt_meta_box', 'lnb\\techprofiles\profiles', 'normal', 'high');
 }
 
 function profile_bio() {
