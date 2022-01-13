@@ -49,7 +49,7 @@ if (!class_exists('TechProfiles')) {
       $this->scripts = array(
         array(
           'handle'  => 'tech-common-js',
-          'src'     => plugins_url('/assets/js/commons.js', __FILE__),
+          'src'     => plugins_url('/dist/js/commons-min.js', __FILE__),
           'deps'    => array(),
           'version' => null,
           'footer'  => true,
@@ -302,39 +302,39 @@ if (!class_exists('TechProfiles')) {
       $profile_bio_facts = $custom['profile_bio_facts'][0];
       $profile_bio_advice = $custom['profile_bio_advice'][0];
       ?>
-        <p><label>Tech Name</label><br />
-          <input class="profile-bio" type="text" size="" name="profile_bio_name" value="<?php echo $profile_bio_name; ?>" />
-        </p>
-        <p><label>Tech Hometown</label><br />
-          <input class="profile-bio" type="text" size="" name="profile_bio_hometown"
-            value="<?php echo $profile_bio_hometown; ?>" />
-        </p>
-        <p><label>Tech College</label><br />
-          <input class="profile-bio" type="text" size="" name="profile_bio_college"
-            value="<?php echo $profile_bio_college; ?>" />
-        </p>
-        <p><label>Tech Certifications</label><br />
-          <em>Separate certifications with a comma</em>
-          <input class="profile-bio" type="text" size="" name="profile_bio_cert" value="<?php echo $profile_bio_cert; ?>" />
-        </p>
-        <p><label>Tech Favorite Aspect of my job:</label><br />
-          <input class="profile-bio" type="text" size="" name="profile_bio_fav" value="<?php echo $profile_bio_fav; ?>" />
-        </p>
-        <p><label>Tech Hobbies</label><br />
-          <input class="profile-bio" type="text" size="" name="profile_bio_hobbies"
-            value="<?php echo $profile_bio_hobbies; ?>" />
-        </p>
-        <p><label>Tech Role Model</label><br />
-          <input class="profile-bio" type="text" size="" name="profile_bio_role" value="<?php echo $profile_bio_role; ?>" />
-        </p>
-        <p><label>Tech Interesting Fact about me</label><br />
-          <input class="profile-bio" type="text" size="" name="profile_bio_facts" value="<?php echo $profile_bio_facts; ?>" />
-        </p>
-        <p><label>Tech Best Advice to customers</label><br />
-          <input class="profile-bio" type="text" size="" name="profile_bio_advice" value="<?php echo $profile_bio_advice; ?>" />
-        </p>
-        <?php
-    }
+<p><label>Tech Name</label><br />
+  <input class="profile-bio" type="text" size="" name="profile_bio_name" value="<?php echo $profile_bio_name; ?>" />
+</p>
+<p><label>Tech Hometown</label><br />
+  <input class="profile-bio" type="text" size="" name="profile_bio_hometown"
+    value="<?php echo $profile_bio_hometown; ?>" />
+</p>
+<p><label>Tech College</label><br />
+  <input class="profile-bio" type="text" size="" name="profile_bio_college"
+    value="<?php echo $profile_bio_college; ?>" />
+</p>
+<p><label>Tech Certifications</label><br />
+  <em>Separate certifications with a comma</em>
+  <input class="profile-bio" type="text" size="" name="profile_bio_cert" value="<?php echo $profile_bio_cert; ?>" />
+</p>
+<p><label>Tech Favorite Aspect of my job:</label><br />
+  <input class="profile-bio" type="text" size="" name="profile_bio_fav" value="<?php echo $profile_bio_fav; ?>" />
+</p>
+<p><label>Tech Hobbies</label><br />
+  <input class="profile-bio" type="text" size="" name="profile_bio_hobbies"
+    value="<?php echo $profile_bio_hobbies; ?>" />
+</p>
+<p><label>Tech Role Model</label><br />
+  <input class="profile-bio" type="text" size="" name="profile_bio_role" value="<?php echo $profile_bio_role; ?>" />
+</p>
+<p><label>Tech Interesting Fact about me</label><br />
+  <input class="profile-bio" type="text" size="" name="profile_bio_facts" value="<?php echo $profile_bio_facts; ?>" />
+</p>
+<p><label>Tech Best Advice to customers</label><br />
+  <input class="profile-bio" type="text" size="" name="profile_bio_advice" value="<?php echo $profile_bio_advice; ?>" />
+</p>
+<?php
+}
 
     public function profile_attributes() {
       global $post;
@@ -344,16 +344,16 @@ if (!class_exists('TechProfiles')) {
       $profile_att_phone = $custom['profile_att_phone'][0];
 
       ?> <p><label>Tech Title</label><br />
-        <input class='profile-bio' type='text' size='' name='profile_att_title' value='<?php echo $profile_att_title; ?>' />
-      </p>
-      <p><label>Tech Contact Email Address</label><br />
-        <input class='profile-bio' type='text' size='' name='profile_att_email' value='<?php echo $profile_att_email; ?>' />
-      </p>
-      <p><label>Tech Phone Number</label><br />
-        <input class='profile-bio' type='text' size='' name='profile_att_phone' value='<?php echo $profile_att_phone; ?>' />
-      </p>
-      <?php
-    }   
+  <input class='profile-bio' type='text' size='' name='profile_att_title' value='<?php echo $profile_att_title; ?>' />
+</p>
+<p><label>Tech Contact Email Address</label><br />
+  <input class='profile-bio' type='text' size='' name='profile_att_email' value='<?php echo $profile_att_email; ?>' />
+</p>
+<p><label>Tech Phone Number</label><br />
+  <input class='profile-bio' type='text' size='' name='profile_att_phone' value='<?php echo $profile_att_phone; ?>' />
+</p>
+<?php
+}
 
     public function profile_nbn() {
       global $post;
@@ -365,18 +365,18 @@ if (!class_exists('TechProfiles')) {
        * Detect plugin. For use in Admin area only.
        */
       if (is_plugin_active('nearby-now/main.php')) {?>
-        <p><label>Nearby Now Email Address</label><br />
-          <input class='profile-bio' type='text' size='' name='profile_nbn_email' value='<?php echo $profile_nbn_email; ?>' />
-        </p>
-        <p><label>Nearby Now Review Count</label><br />
-          <input class='profile-bio' type='text' size='20' name='profile_nbn_count' value='<?php echo $profile_nbn_count; ?>' />
-        </p>
-        <?php } else {?>
-        <p style='color:#ff0000;'><strong>NN REVIEWS PLUGIN NOT ACTIVE:</strong> Please active the NN Reviews Plugin to display
-          these fields.</p>
-        <?php }?>
-        <?php
-    }
+<p><label>Nearby Now Email Address</label><br />
+  <input class='profile-bio' type='text' size='' name='profile_nbn_email' value='<?php echo $profile_nbn_email; ?>' />
+</p>
+<p><label>Nearby Now Review Count</label><br />
+  <input class='profile-bio' type='text' size='20' name='profile_nbn_count' value='<?php echo $profile_nbn_count; ?>' />
+</p>
+<?php } else {?>
+<p style='color:#ff0000;'><strong>NN REVIEWS PLUGIN NOT ACTIVE:</strong> Please active the NN Reviews Plugin to display
+  these fields.</p>
+<?php }?>
+<?php
+}
 
     public function cert_images() {
       global $post;
@@ -386,40 +386,40 @@ if (!class_exists('TechProfiles')) {
       $cert_images_three = $custom['cert_images_three'][0];
       $cert_images_four = $custom['cert_images_four'][0];
       ?>
-        <p><label>Certification Image 1:</label><br />
-          <input class='upload_image wp-media-buttons profile-bio' type='text' size='' name='cert_images_one'
-            value='<?php echo $cert_images_one; ?>' />
-          <span class='wp-media-buttons'><a title='Add Media' data-editor='cert_images_one'
-              class='button upload_image_button add_media' href='#'><span class='wp-media-buttons-icon'></span> Add
-              Media</a></span>
-        <div class='clear'></div>
-        </p>
-        <p><label>Certification Image 2:</label><br />
-          <input class='upload_image wp-media-buttons profile-bio' type='text' size='' name='cert_images_two'
-            value='<?php echo $cert_images_two; ?>' />
-          <span class='wp-media-buttons'><a title='Add Media' data-editor='cert_images_two'
-              class='button upload_image_button add_media' href='#'><span class='wp-media-buttons-icon'></span> Add
-              Media</a></span>
-        <div class='clear'></div>
-        </p>
-        <p><label>Certification Image 3:</label><br />
-          <input class='upload_image wp-media-buttons profile-bio' type='text' size='' name='cert_images_three'
-            value='<?php echo $cert_images_three; ?>' />
-          <span class='wp-media-buttons'><a title='Add Media' data-editor='cert_images_three'
-              class='button upload_image_button add_media' href='#'><span class='wp-media-buttons-icon'></span> Add
-              Media</a></span>
-        <div class='clear'></div>
-        </p>
-        <p><label>Certification Image 4:</label><br />
-          <input class='upload_image wp-media-buttons profile-bio' type='text' size='' name='cert_images_four'
-            value='<?php echo $cert_images_four; ?>' />
-          <span class='wp-media-buttons'><a title='Add Media' data-editor='cert_images_four'
-              class='button upload_image_button add_media' href='#'><span class='wp-media-buttons-icon'></span> Add
-              Media</a></span>
-        <div class='clear'></div>
-        </p>
-        <?php
-    }
+<p><label>Certification Image 1:</label><br />
+  <input class='upload_image wp-media-buttons profile-bio' type='text' size='' name='cert_images_one'
+    value='<?php echo $cert_images_one; ?>' />
+  <span class='wp-media-buttons'><a title='Add Media' data-editor='cert_images_one'
+      class='button upload_image_button add_media' href='#'><span class='wp-media-buttons-icon'></span> Add
+      Media</a></span>
+<div class='clear'></div>
+</p>
+<p><label>Certification Image 2:</label><br />
+  <input class='upload_image wp-media-buttons profile-bio' type='text' size='' name='cert_images_two'
+    value='<?php echo $cert_images_two; ?>' />
+  <span class='wp-media-buttons'><a title='Add Media' data-editor='cert_images_two'
+      class='button upload_image_button add_media' href='#'><span class='wp-media-buttons-icon'></span> Add
+      Media</a></span>
+<div class='clear'></div>
+</p>
+<p><label>Certification Image 3:</label><br />
+  <input class='upload_image wp-media-buttons profile-bio' type='text' size='' name='cert_images_three'
+    value='<?php echo $cert_images_three; ?>' />
+  <span class='wp-media-buttons'><a title='Add Media' data-editor='cert_images_three'
+      class='button upload_image_button add_media' href='#'><span class='wp-media-buttons-icon'></span> Add
+      Media</a></span>
+<div class='clear'></div>
+</p>
+<p><label>Certification Image 4:</label><br />
+  <input class='upload_image wp-media-buttons profile-bio' type='text' size='' name='cert_images_four'
+    value='<?php echo $cert_images_four; ?>' />
+  <span class='wp-media-buttons'><a title='Add Media' data-editor='cert_images_four'
+      class='button upload_image_button add_media' href='#'><span class='wp-media-buttons-icon'></span> Add
+      Media</a></span>
+<div class='clear'></div>
+</p>
+<?php
+}
 
     public function save_meta() {
       global $post;
