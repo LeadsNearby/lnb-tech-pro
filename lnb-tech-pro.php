@@ -271,56 +271,56 @@ add_action('admin_init', 'lnb\techprofiles\meta_box');
 function meta_box() {
 
   //Profile
-  add_meta_box("profile_bio", "Profile Bio", "lnb\\techprofiles\profile_bio", "profiles", "normal", "high");
-  add_meta_box("cert_images", "Certification Images - <em class='small'>The certification images should be no more than 250px wide</em>", "lnb\\techprofiles\cert_images", "profiles", "normal", "high");
-  add_meta_box("profile_attributes", "Profile Attributes", "lnb\\techprofiles\profile_attributes", "profiles", "normal", "high");
-  add_meta_box("profile_nbn", "Nearby Now Attributes", "profile_nbn", "lnb\\techprofiles\profiles", "normal", "high");
+  add_meta_box('profile_bio', 'Profile Bio', 'lnb\\techprofiles\profile_bio', 'profiles', 'normal', 'high');
+  add_meta_box('cert_images', 'Certification Images - <em class="small">The certification images should be no more than 250px wide</em>', 'lnb\\techprofiles\cert_images', 'profiles', 'normal', 'high');
+  add_meta_box('profile_attributes', 'Profile Attributes', 'lnb\techprofiles\profile_attributes', 'profiles', 'normal', 'high');
+  add_meta_box('profile_nbn', 'Nearby Now Attributes', 'profile_nbn', 'lnb\\techprofiles\profiles', 'normal', 'high');
   add_meta_box('postexcerpt', __('Excerpt'), 'post_excerpt_meta_box', 'lnb\\techprofiles\profiles', 'normal', 'high');
 }
 
 function profile_bio() {
   global $post;
   $custom = get_post_custom($post->ID);
-  $profile_bio_name = $custom["profile_bio_name"][0];
-  $profile_bio_hometown = $custom["profile_bio_hometown"][0];
-  $profile_bio_college = $custom["profile_bio_college"][0];
-  $profile_bio_cert = $custom["profile_bio_cert"][0];
-  $profile_bio_fav = $custom["profile_bio_fav"][0];
-  $profile_bio_hobbies = $custom["profile_bio_hobbies"][0];
-  $profile_bio_role = $custom["profile_bio_role"][0];
-  $profile_bio_facts = $custom["profile_bio_facts"][0];
-  $profile_bio_advice = $custom["profile_bio_advice"][0];
+  $profile_bio_name = $custom['profile_bio_name'][0];
+  $profile_bio_hometown = $custom['profile_bio_hometown'][0];
+  $profile_bio_college = $custom['profile_bio_college'][0];
+  $profile_bio_cert = $custom['profile_bio_cert'][0];
+  $profile_bio_fav = $custom['profile_bio_fav'][0];
+  $profile_bio_hobbies = $custom['profile_bio_hobbies'][0];
+  $profile_bio_role = $custom['profile_bio_role'][0];
+  $profile_bio_facts = $custom['profile_bio_facts'][0];
+  $profile_bio_advice = $custom['profile_bio_advice'][0];
   ?>
 <p><label>Tech Name</label><br />
-  <input class="profile-bio" type="text" size="" name="profile_bio_name" value="<?php echo $profile_bio_name; ?>" />
+  <input class='profile-bio' type='text' size='' name='profile_bio_name' value='<?php echo $profile_bio_name; ?>' />
 </p>
 <p><label>Tech Hometown</label><br />
-  <input class="profile-bio" type="text" size="" name="profile_bio_hometown"
-    value="<?php echo $profile_bio_hometown; ?>" />
+  <input class='profile-bio' type='text' size='' name='profile_bio_hometown'
+    value='<?php echo $profile_bio_hometown; ?>' />
 </p>
 <p><label>Tech College</label><br />
-  <input class="profile-bio" type="text" size="" name="profile_bio_college"
-    value="<?php echo $profile_bio_college; ?>" />
+  <input class='profile-bio' type='text' size='' name='profile_bio_college'
+    value='<?php echo $profile_bio_college; ?>' />
 </p>
 <p><label>Tech Certifications</label><br />
   <em>Separate certifications with a comma</em>
-  <input class="profile-bio" type="text" size="" name="profile_bio_cert" value="<?php echo $profile_bio_cert; ?>" />
+  <input class='profile-bio' type='text' size='' name='profile_bio_cert' value='<?php echo $profile_bio_cert; ?>' />
 </p>
 <p><label>Tech Favorite Aspect of my job:</label><br />
-  <input class="profile-bio" type="text" size="" name="profile_bio_fav" value="<?php echo $profile_bio_fav; ?>" />
+  <input class='profile-bio' type='text' size='' name='profile_bio_fav' value='<?php echo $profile_bio_fav; ?>' />
 </p>
 <p><label>Tech Hobbies</label><br />
-  <input class="profile-bio" type="text" size="" name="profile_bio_hobbies"
-    value="<?php echo $profile_bio_hobbies; ?>" />
+  <input class='profile-bio' type='text' size='' name='profile_bio_hobbies'
+    value='<?php echo $profile_bio_hobbies; ?>' />
 </p>
 <p><label>Tech Role Model</label><br />
-  <input class="profile-bio" type="text" size="" name="profile_bio_role" value="<?php echo $profile_bio_role; ?>" />
+  <input class='profile-bio' type='text' size='' name='profile_bio_role' value='<?php echo $profile_bio_role; ?>' />
 </p>
 <p><label>Tech Interesting Fact about me</label><br />
-  <input class="profile-bio" type="text" size="" name="profile_bio_facts" value="<?php echo $profile_bio_facts; ?>" />
+  <input class='profile-bio' type='text' size='' name='profile_bio_facts' value='<?php echo $profile_bio_facts; ?>' />
 </p>
 <p><label>Tech Best Advice to customers</label><br />
-  <input class="profile-bio" type="text" size="" name="profile_bio_advice" value="<?php echo $profile_bio_advice; ?>" />
+  <input class='profile-bio' type='text' size='' name='profile_bio_advice' value='<?php echo $profile_bio_advice; ?>' />
 </p>
 <?php
 }
@@ -328,18 +328,18 @@ function profile_bio() {
 function profile_attributes() {
   global $post;
   $custom = get_post_custom($post->ID);
-  $profile_att_title = $custom["profile_att_title"][0];
-  $profile_att_email = $custom["profile_att_email"][0];
-  $profile_att_phone = $custom["profile_att_phone"][0];
+  $profile_att_title = $custom['profile_att_title'][0];
+  $profile_att_email = $custom['profile_att_email'][0];
+  $profile_att_phone = $custom['profile_att_phone'][0];
   ?>
 <p><label>Tech Title</label><br />
-  <input class="profile-bio" type="text" size="" name="profile_att_title" value="<?php echo $profile_att_title; ?>" />
+  <input class='profile-bio' type='text' size='' name='profile_att_title' value='<?php echo $profile_att_title; ?>' />
 </p>
 <p><label>Tech Contact Email Address</label><br />
-  <input class="profile-bio" type="text" size="" name="profile_att_email" value="<?php echo $profile_att_email; ?>" />
+  <input class='profile-bio' type='text' size='' name='profile_att_email' value='<?php echo $profile_att_email; ?>' />
 </p>
 <p><label>Tech Phone Number</label><br />
-  <input class="profile-bio" type="text" size="" name="profile_att_phone" value="<?php echo $profile_att_phone; ?>" />
+  <input class='profile-bio' type='text' size='' name='profile_att_phone' value='<?php echo $profile_att_phone; ?>' />
 </p>
 <?php
 
@@ -348,21 +348,21 @@ function profile_attributes() {
 function profile_nbn() {
   global $post;
   $custom = get_post_custom($post->ID);
-  $profile_nbn_email = $custom["profile_nbn_email"][0];
-  $profile_nbn_count = $custom["profile_nbn_count"][0];
+  $profile_nbn_email = $custom['profile_nbn_email'][0];
+  $profile_nbn_count = $custom['profile_nbn_count'][0];
 
   /**
    * Detect plugin. For use in Admin area only.
    */
   if (is_plugin_active('nearby-now/main.php')) {?>
 <p><label>Nearby Now Email Address</label><br />
-  <input class="profile-bio" type="text" size="" name="profile_nbn_email" value="<?php echo $profile_nbn_email; ?>" />
+  <input class='profile-bio' type='text' size='' name='profile_nbn_email' value='<?php echo $profile_nbn_email; ?>' />
 </p>
 <p><label>Nearby Now Review Count</label><br />
-  <input class="profile-bio" type="text" size="20" name="profile_nbn_count" value="<?php echo $profile_nbn_count; ?>" />
+  <input class='profile-bio' type='text' size='20' name='profile_nbn_count' value='<?php echo $profile_nbn_count; ?>' />
 </p>
 <?php } else {?>
-<p style="color:#ff0000;"><strong>NN REVIEWS PLUGIN NOT ACTIVE:</strong> Please active the NN Reviews Plugin to display
+<p style='color:#ff0000;'><strong>NN REVIEWS PLUGIN NOT ACTIVE:</strong> Please active the NN Reviews Plugin to display
   these fields.</p>
 <?php }?>
 <?php
@@ -371,42 +371,42 @@ function profile_nbn() {
 function cert_images() {
   global $post;
   $custom = get_post_custom($post->ID);
-  $cert_images_one = $custom["cert_images_one"][0];
-  $cert_images_two = $custom["cert_images_two"][0];
-  $cert_images_three = $custom["cert_images_three"][0];
-  $cert_images_four = $custom["cert_images_four"][0];
+  $cert_images_one = $custom['cert_images_one'][0];
+  $cert_images_two = $custom['cert_images_two'][0];
+  $cert_images_three = $custom['cert_images_three'][0];
+  $cert_images_four = $custom['cert_images_four'][0];
   ?>
 <p><label>Certification Image 1:</label><br />
-  <input class="upload_image wp-media-buttons profile-bio" type="text" size="" name="cert_images_one"
-    value="<?php echo $cert_images_one; ?>" />
-  <span class="wp-media-buttons"><a title="Add Media" data-editor="cert_images_one"
-      class="button upload_image_button add_media" href="#"><span class="wp-media-buttons-icon"></span> Add
+  <input class='upload_image wp-media-buttons profile-bio' type='text' size='' name='cert_images_one'
+    value='<?php echo $cert_images_one; ?>' />
+  <span class='wp-media-buttons'><a title='Add Media' data-editor='cert_images_one'
+      class='button upload_image_button add_media' href='#'><span class='wp-media-buttons-icon'></span> Add
       Media</a></span>
-<div class="clear"></div>
+<div class='clear'></div>
 </p>
 <p><label>Certification Image 2:</label><br />
-  <input class="upload_image wp-media-buttons profile-bio" type="text" size="" name="cert_images_two"
-    value="<?php echo $cert_images_two; ?>" />
-  <span class="wp-media-buttons"><a title="Add Media" data-editor="cert_images_two"
-      class="button upload_image_button add_media" href="#"><span class="wp-media-buttons-icon"></span> Add
+  <input class='upload_image wp-media-buttons profile-bio' type='text' size='' name='cert_images_two'
+    value='<?php echo $cert_images_two; ?>' />
+  <span class='wp-media-buttons'><a title='Add Media' data-editor='cert_images_two'
+      class='button upload_image_button add_media' href='#'><span class='wp-media-buttons-icon'></span> Add
       Media</a></span>
-<div class="clear"></div>
+<div class='clear'></div>
 </p>
 <p><label>Certification Image 3:</label><br />
-  <input class="upload_image wp-media-buttons profile-bio" type="text" size="" name="cert_images_three"
-    value="<?php echo $cert_images_three; ?>" />
-  <span class="wp-media-buttons"><a title="Add Media" data-editor="cert_images_three"
-      class="button upload_image_button add_media" href="#"><span class="wp-media-buttons-icon"></span> Add
+  <input class='upload_image wp-media-buttons profile-bio' type='text' size='' name='cert_images_three'
+    value='<?php echo $cert_images_three; ?>' />
+  <span class='wp-media-buttons'><a title='Add Media' data-editor='cert_images_three'
+      class='button upload_image_button add_media' href='#'><span class='wp-media-buttons-icon'></span> Add
       Media</a></span>
-<div class="clear"></div>
+<div class='clear'></div>
 </p>
 <p><label>Certification Image 4:</label><br />
-  <input class="upload_image wp-media-buttons profile-bio" type="text" size="" name="cert_images_four"
-    value="<?php echo $cert_images_four; ?>" />
-  <span class="wp-media-buttons"><a title="Add Media" data-editor="cert_images_four"
-      class="button upload_image_button add_media" href="#"><span class="wp-media-buttons-icon"></span> Add
+  <input class='upload_image wp-media-buttons profile-bio' type='text' size='' name='cert_images_four'
+    value='<?php echo $cert_images_four; ?>' />
+  <span class='wp-media-buttons'><a title='Add Media' data-editor='cert_images_four'
+      class='button upload_image_button add_media' href='#'><span class='wp-media-buttons-icon'></span> Add
       Media</a></span>
-<div class="clear"></div>
+<div class='clear'></div>
 </p>
 <?php
 }
@@ -414,24 +414,24 @@ function cert_images() {
 add_action('save_post_profiles', 'save_meta');
 function save_meta() {
   global $post;
-  update_post_meta($post->ID, "profile_nbn_email", $_POST["profile_nbn_email"]);
-  update_post_meta($post->ID, "profile_nbn_count", $_POST["profile_nbn_count"]);
-  update_post_meta($post->ID, "profile_att_title", $_POST["profile_att_title"]);
-  update_post_meta($post->ID, "profile_att_email", $_POST["profile_att_email"]);
-  update_post_meta($post->ID, "profile_att_phone", $_POST["profile_att_phone"]);
-  update_post_meta($post->ID, "profile_bio_name", $_POST["profile_bio_name"]);
-  update_post_meta($post->ID, "profile_bio_hometown", $_POST["profile_bio_hometown"]);
-  update_post_meta($post->ID, "profile_bio_college", $_POST["profile_bio_college"]);
-  update_post_meta($post->ID, "profile_bio_cert", $_POST["profile_bio_cert"]);
-  update_post_meta($post->ID, "profile_bio_fav", $_POST["profile_bio_fav"]);
-  update_post_meta($post->ID, "profile_bio_hobbies", $_POST["profile_bio_hobbies"]);
-  update_post_meta($post->ID, "profile_bio_role", $_POST["profile_bio_role"]);
-  update_post_meta($post->ID, "profile_bio_facts", $_POST["profile_bio_facts"]);
-  update_post_meta($post->ID, "profile_bio_advice", $_POST["profile_bio_advice"]);
-  update_post_meta($post->ID, "cert_images_one", $_POST["cert_images_one"]);
-  update_post_meta($post->ID, "cert_images_two", $_POST["cert_images_two"]);
-  update_post_meta($post->ID, "cert_images_three", $_POST["cert_images_three"]);
-  update_post_meta($post->ID, "cert_images_four", $_POST["cert_images_four"]);
+  update_post_meta($post->ID, 'profile_nbn_email', $_POST['profile_nbn_email']);
+  update_post_meta($post->ID, 'profile_nbn_count', $_POST['profile_nbn_count']);
+  update_post_meta($post->ID, 'profile_att_title', $_POST['profile_att_title']);
+  update_post_meta($post->ID, 'profile_att_email', $_POST['profile_att_email']);
+  update_post_meta($post->ID, 'profile_att_phone', $_POST['profile_att_phone']);
+  update_post_meta($post->ID, 'profile_bio_name', $_POST['profile_bio_name']);
+  update_post_meta($post->ID, 'profile_bio_hometown', $_POST['profile_bio_hometown']);
+  update_post_meta($post->ID, 'profile_bio_college', $_POST['profile_bio_college']);
+  update_post_meta($post->ID, 'profile_bio_cert', $_POST['profile_bio_cert']);
+  update_post_meta($post->ID, 'profile_bio_fav', $_POST['profile_bio_fav']);
+  update_post_meta($post->ID, 'profile_bio_hobbies', $_POST['profile_bio_hobbies']);
+  update_post_meta($post->ID, 'profile_bio_role', $_POST['profile_bio_role']);
+  update_post_meta($post->ID, 'profile_bio_facts', $_POST['profile_bio_facts']);
+  update_post_meta($post->ID, 'profile_bio_advice', $_POST['profile_bio_advice']);
+  update_post_meta($post->ID, 'cert_images_one', $_POST['cert_images_one']);
+  update_post_meta($post->ID, 'cert_images_two', $_POST['cert_images_two']);
+  update_post_meta($post->ID, 'cert_images_three', $_POST['cert_images_three']);
+  update_post_meta($post->ID, 'cert_images_four', $_POST['cert_images_four']);
 }
 
 add_action('admin_menu', 'lnb\techprofiles\remove_tech_excerpt_fields');
