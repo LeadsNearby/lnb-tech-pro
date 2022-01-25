@@ -21,11 +21,12 @@
 }
 
 .tech-profiles-category {
-  //   display: flex;
-  //   flex-wrap: wrap;
-  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+  grid-column-gap: 1em;
+  grid-row-gap: 1em;
 }
 
 .tech-profile {
