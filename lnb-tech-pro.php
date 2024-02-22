@@ -214,6 +214,9 @@ function tech_profile() {
     );
 
     $options = get_option('lnb-tech-pro-options', true);
+	
+    // Check if $options is an array and 'slug' is set; otherwise, use default 'profiles'
+    $slug = is_array($options) && isset($options['slug']) ? $options['slug'] : 'profiles';
 
     register_post_type(
         'profiles',
@@ -237,7 +240,7 @@ function tech_profile() {
             'has_archive' => true,
             'query_var' => true,
             'can_export' => true,
-            'rewrite' => array('slug' => $options['slug'] ? $options['slug'] : 'profiles', 'with_front' => false),
+            'rewrite' => array('slug' => $slug, 'with_front' => false),
             'capability_type' => 'post',
             'show_in_rest' => true,
         )
