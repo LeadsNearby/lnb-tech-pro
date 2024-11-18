@@ -3,7 +3,7 @@
 Plugin Name: LeadsNearby Tech Profiles
 Plugin URI: http://leadsnearby.com
 Description: Creates Tech Profiles with Nearby Now Plugin capability.
-Version: 1.5.2
+Version: 1.5.3
 Author: Leads Nearby
 Author URI: http://leadsnearby.com
 License: GPLv2
@@ -115,7 +115,10 @@ if (!class_exists('LeadsNearby_Tech_Profiles')) {
         }
 
         public function sanitize_settings($data) {
-            $data['slug'] = sanitize_title_with_dashes($data['slug']);
+            if (!is_array($data)) {
+                $data = [];
+            }
+            $data['slug'] = isset($data['slug']) ? sanitize_title_with_dashes($data['slug']) : '';
             return $data;
         }
 
@@ -127,7 +130,7 @@ if (!class_exists('LeadsNearby_Tech_Profiles')) {
 
         public function register_settings() {
 
-            $data = get_option('lnb-tech-pro-options');
+            $data = get_option('lnb-tech-pro-options', []);
 
             add_settings_section(
                 'section_general',
@@ -145,7 +148,7 @@ if (!class_exists('LeadsNearby_Tech_Profiles')) {
                 array(
                     'label_for' => 'section_general_slug',
                     'name' => 'slug',
-                    'value' => esc_attr($data['slug']),
+                    'value' => isset($data['slug']) ? esc_attr($data['slug']) : '',
                     'option_name' => 'lnb-tech-pro-options',
                     'desc' => 'If nothing is specified, "profiles" will be used',
                 )
@@ -160,7 +163,7 @@ if (!class_exists('LeadsNearby_Tech_Profiles')) {
                 array(
                     'label_for' => 'section_general_sprite',
                     'name' => 'sprite',
-                    'value' => esc_attr(isset($data['sprite']) ? $data['sprite'] : false),
+                    'value' => isset($data['sprite']) ? esc_attr($data['sprite']) : '',
                     'option_name' => 'lnb-tech-pro-options',
                 )
             );
